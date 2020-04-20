@@ -1,7 +1,7 @@
 import axios from "axios";
-import default_url from "./config";
 
 // const default_url = "http://localhost:3000";
+const default_url = "https://protected-tor-10719.herokuapp.com/";
 
 export const getEvents = () => 
 {
