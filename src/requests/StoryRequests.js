@@ -22,7 +22,7 @@ export const getStory = (id) =>
 {
   try
     {
-      let path = `${process.env.BACKEND_URL || default_url}`;
+      let path = `${default_url}`;
       path = path.concat(`/stories/${id}`);
 
       return axios.get(path);
@@ -37,7 +37,7 @@ export const postStory = (formData) =>
 {
   try
   {
-    let path = `${process.env.BACKEND_URL || default_url}`;
+    let path = `${default_url}`;
     path = path.concat(`/stories`);
 
     return axios.post(path, formData);
@@ -52,7 +52,7 @@ export const putStory = (id, formData) =>
 {
   try
   {
-    let path = `${process.env.BACKEND_URL || default_url}`;
+    let path = `${default_url}`;
     path = path.concat(`/stories/${id}`);
 
     return axios.put(path, formData);
@@ -67,7 +67,7 @@ export const deleteStory = (id) =>
 {
   try
     {
-      let path = `${process.env.BACKEND_URL || default_url}`;
+      let path = `${default_url}`;
       path = path.concat(`/stories/${id}`);
 
       return axios.delete(path);
