@@ -29,7 +29,7 @@ const StoryEditor = ({ history }) =>
   // If we are not in /stories/new is because we must be editing a specific story,
   // then we need to get the current data of that story
   useEffect(() => {
-    if (currentUrl.pathname != "/stories/new")
+    if (currentUrl.pathname !== "/stories/new")
     {
       getData(urlParams.id);
     }
@@ -73,7 +73,7 @@ const StoryEditor = ({ history }) =>
 
     try
     {
-      if (currentUrl.pathname == "/stories/new")
+      if (currentUrl.pathname === "/stories/new")
       {
         // POST
         setLoading(true);
