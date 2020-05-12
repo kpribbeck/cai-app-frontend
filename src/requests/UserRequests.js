@@ -12,8 +12,7 @@ export const postUser = async (formData) => {
     },
   };
   try {
-    let path = `${process.env.BACKEND_URL || default_url}`;
-    path = path.concat(`/auth/sign-up`);
+    let path = "/auth/sign-up";
 
     const res = await axiosInstance.post(path, formData, config);
 
@@ -51,8 +50,7 @@ export const authUser = async (formData) => {
     },
   };
   try {
-    let path = `${process.env.BACKEND_URL || default_url}`;
-    path = path.concat(`/auth/log-in`);
+    let path = "/auth/log-in";
 
     const res = await axiosInstance.post(path, formData, config);
 
