@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { Link, withRouter } from "react-router-dom";
+import React, { useState } from "react";
+import { withRouter } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { deleteStory } from "../../requests/StoryRequests";
 import Spinner from "../layout/Spinner";
+import './Stories.css'
 
 
 const StoryItem = (props) =>
@@ -16,7 +17,7 @@ const StoryItem = (props) =>
     try
     {
       setLoading(true);
-      const res = await deleteStory(props.id);
+      await deleteStory(props.id);
       setLoading(false);
       props.history.push('/');
     }
@@ -30,29 +31,26 @@ const StoryItem = (props) =>
   return loading ? (
     <Spinner />
   ) : (
-    <div className="story-item border shadow-sm p-3 mb-3 bg-white rounded">
-      <div>
-        <Link to={`/stories/${props.id}`}>
-          <h3 className="my-1 text-dark">{props.title}</h3>
-        </Link>
-        <Link to={`/stories/edit/${props.id}`}>
-          <button
-            type="button"
-            className="btn btn-light"
-          >
+    <div className="item-container">
+      <a href={`stories/${props.id}`} className="title">
+        <h3>{props.title}</h3>
+      </a>
+      <hr/>
+      <p>
+        {props.body}
+      </p>
+      <div id="button-bar">
+        <a href={`/stories/edit/${props.id}`}>
+          <button onClick={e => onDelete(e)}>
+            <FontAwesomeIcon icon={faTrash} />
+          </button>
+        </a>
+        <a href={`/stories/edit/${props.id}`}>
+          <button>
             <FontAwesomeIcon icon={faEdit} />
           </button>
-        </Link>
-        <button
-          type="button"
-          className="btn btn-light"
-          onClick={e => onDelete(e)}
-        >
-          <FontAwesomeIcon icon={faTrash} />
-        </button>
-        <p>{props.body}</p>
+        </a>
       </div>
-
     </div>
   );
 }

@@ -1,48 +1,52 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useLocation, withRouter } from 'react-router-dom';
-import { getEvent, postEvent, putEvent } from '../../requests/EventRequests';
+import {
+  getObject,
+  postObject,
+  putObject,
+} from '../../requests/ObjectRequests';
 import Spinner from '../layout/Spinner';
 
-const EventEditor = ({ history }) => {
+const ObjectEditor = ({ history }) => {
   const urlParams = useParams();
   const currentUrl = useLocation();
 
   const [loading, setLoading] = useState(false);
 
-  const [eventId, setEventId] = useState(null);
+  const [objectId, setObjectId] = useState(null);
 
   const [formData, setFormData] = useState({
-    title: '',
+    name: '',
     description: '',
-    organizer: '',
-    place: '',
-    category: '',
+    stock: '',
+    picture: '',
+    price: '',
   });
 
-  const { title, description, organizer, place, category } = formData;
+  const { name, description, stock, picture, price } = formData;
 
   // This executes when component is mounted
-  // If we are not in /events/new is because we must be editing a specific event,
-  // then we need to get the current data of that event
+  // If we are not in /objects/new is because we must be editing a specific object,
+  // then we need to get the current data of that object
   useEffect(() => {
-    if (currentUrl.pathname !== '/events/new') {
+    if (currentUrl.pathname !== '/objects/new') {
       getData(urlParams.id);
     }
   }, [urlParams]);
 
   // makes a GET async call to the DB
-  const getData = async (eventId) => {
+  const getData = async (objectId) => {
     try {
       setLoading(true);
-      const res = await getEvent(eventId);
+      const res = await getObject(objectId);
       setLoading(false);
-      setEventId(res.data.id);
+      setObjectId(res.data.id);
       setFormData({
-        title: res.data.title,
+        name: res.data.name,
         description: res.data.description,
-        organizer: res.data.organizer,
-        place: res.data.place,
-        category: res.data.category,
+        stock: res.data.stock,
+        picture: res.data.picture,
+        price: res.data.price,
       });
     } catch (err) {
       setLoading(false);
@@ -64,20 +68,20 @@ const EventEditor = ({ history }) => {
     console.log(formData);
 
     try {
-      if (currentUrl.pathname === '/events/new') {
+      if (currentUrl.pathname === '/objects/new') {
         // POST
         setLoading(true);
-        const res = await postEvent(formData);
+        const res = await postObject(formData);
         setLoading(false);
         console.log('RES: ' + res);
-        history.push('/events');
+        history.push('/objects');
       } else {
         // PUT
         setLoading(true);
         console.log(formData);
-        await putEvent(eventId, formData);
+        await putObject(objectId, formData);
         setLoading(false);
-        history.push('/events');
+        history.push('/objects');
       }
     } catch (err) {
       setLoading(false);
@@ -89,20 +93,20 @@ const EventEditor = ({ history }) => {
     <Spinner />
   ) : (
     <div>
-      <h1>Form para Eventos</h1>
+      <h1>Form para Objetos</h1>
       <div className='form-container'>
         <form onSubmit={(e) => onSubmit(e)}>
           <div className='row'>
             <div className='col-20'>
-              <label htmlFor='title'>Title:</label>
+              <label htmlFor='name'>Name:</label>
               <br />
             </div>
             <div className='col-80'>
               <input
                 type='text'
-                id='title'
-                name='title'
-                value={title}
+                id='name'
+                name='name'
+                value={name}
                 onChange={(e) => onChange(e)}
                 required
               />
@@ -128,15 +132,15 @@ const EventEditor = ({ history }) => {
           </div>
           <div className='row'>
             <div className='col-20'>
-              <label htmlFor='organizer'>Organizer:</label>
+              <label htmlFor='stock'>Stock:</label>
               <br />
             </div>
             <div className='col-80'>
               <input
-                type='text'
-                id='organizer'
-                name='organizer'
-                value={organizer}
+                type='number'
+                id='stock'
+                name='stock'
+                value={stock}
                 onChange={(e) => onChange(e)}
                 required
               />
@@ -145,15 +149,15 @@ const EventEditor = ({ history }) => {
           </div>
           <div className='row'>
             <div className='col-20'>
-              <label htmlFor='place'>Place:</label>
+              <label htmlFor='picture'>Picture URL:</label>
               <br />
             </div>
             <div className='col-80'>
               <input
                 type='text'
-                id='place'
-                name='place'
-                value={place}
+                id='picture'
+                name='picture'
+                value={picture}
                 onChange={(e) => onChange(e)}
                 required
               />
@@ -162,15 +166,15 @@ const EventEditor = ({ history }) => {
           </div>
           <div className='row'>
             <div className='col-20'>
-              <label htmlFor='category'>Category:</label>
+              <label htmlFor='price'>Price:</label>
               <br />
             </div>
             <div className='col-80'>
               <input
                 type='text'
-                id='category'
-                name='category'
-                value={category}
+                id='price'
+                name='price'
+                value={price}
                 onChange={(e) => onChange(e)}
                 required
               />
@@ -186,4 +190,4 @@ const EventEditor = ({ history }) => {
   );
 };
 
-export default withRouter(EventEditor);
+export default withRouter(ObjectEditor);

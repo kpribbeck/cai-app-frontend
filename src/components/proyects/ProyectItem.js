@@ -2,18 +2,18 @@ import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { deleteEvent } from '../../requests/EventRequests';
+import { deleteProyect } from '../../requests/ProyectRequests';
 import Spinner from '../layout/Spinner';
-import './Events.css';
+import './Proyects.css';
 
-const EventItem = (props) => {
+const ProyectItem = (props) => {
   const [loading, setLoading] = useState(false);
 
   const onDelete = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
-      await deleteEvent(props.id);
+      await deleteProyect(props.id);
       setLoading(false);
       props.history.push('/');
     } catch (err) {
@@ -26,20 +26,19 @@ const EventItem = (props) => {
     <Spinner />
   ) : (
     <div className='item-container'>
-      <a href={`events/${props.id}`} className='title'>
-        <h3>{props.title}</h3>
+      <a href={`proyects/${props.id}`} className='title'>
+        <h3>{props.name}</h3>
       </a>
       <hr />
       <p>{props.description}</p>
-      <p>Lugar: {props.place}</p>
-      <p>Categoria: {props.category}</p>
+      <p>Contacto: {props.contact}</p>
       <div id='button-bar'>
-        <a href={`/events/edit/${props.id}`}>
+        <a href={`/proyects/edit/${props.id}`}>
           <button onClick={(e) => onDelete(e)}>
             <FontAwesomeIcon icon={faTrash} />
           </button>
         </a>
-        <a href={`/events/edit/${props.id}`}>
+        <a href={`/proyects/edit/${props.id}`}>
           <button>
             <FontAwesomeIcon icon={faEdit} />
           </button>
@@ -49,4 +48,4 @@ const EventItem = (props) => {
   );
 };
 
-export default withRouter(EventItem);
+export default withRouter(ProyectItem);

@@ -1,22 +1,25 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { getEvent } from '../../requests/EventRequests';
+import {
+  getLost_n_found,
+  getLost_n_founds,
+} from '../../requests/Lost_n_foundRequests';
 import { useParams } from 'react-router-dom';
-import EventItem from './EventItem';
+import Lost_n_foundItem from './Lost_n_foundItem';
 import Spinner from '../layout/Spinner';
 
-const Event = () => {
+const Lost_n_found = () => {
   const urlParams = useParams();
 
-  const [event, setEvent] = useState(null);
+  const [lost_n_found, setLost_n_found] = useState(null);
   const [loading, setLoading] = useState(true);
 
   // makes async call to DB
-  const getData = async (eventId) => {
+  const getData = async (lost_n_foundId) => {
     try {
       setLoading(true);
-      const res = await getEvent(eventId);
+      const res = await getLost_n_found(lost_n_foundId);
       setLoading(false);
-      setEvent(res.data);
+      setLost_n_found(res.data);
     } catch (err) {
       setLoading(false);
       console.log('Error: ' + err);
@@ -32,10 +35,10 @@ const Event = () => {
   ) : (
     <Fragment>
       <div className='mt-3'>
-        <EventItem {...event} />
+        <Lost_n_foundItem {...lost_n_found} />
       </div>
     </Fragment>
   );
 };
 
-export default Event;
+export default Lost_n_found;

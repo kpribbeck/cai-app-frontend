@@ -2,18 +2,18 @@ import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { deleteEvent } from '../../requests/EventRequests';
+import { deleteUser } from '../../requests/UserRequests';
 import Spinner from '../layout/Spinner';
-import './Events.css';
+import './Users.css';
 
-const EventItem = (props) => {
+const UserItem = (props) => {
   const [loading, setLoading] = useState(false);
 
   const onDelete = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
-      await deleteEvent(props.id);
+      await deleteUser(props.id);
       setLoading(false);
       props.history.push('/');
     } catch (err) {
@@ -25,28 +25,21 @@ const EventItem = (props) => {
   return loading ? (
     <Spinner />
   ) : (
-    <div className='item-container'>
-      <a href={`events/${props.id}`} className='title'>
-        <h3>{props.title}</h3>
-      </a>
-      <hr />
-      <p>{props.description}</p>
-      <p>Lugar: {props.place}</p>
-      <p>Categoria: {props.category}</p>
-      <div id='button-bar'>
-        <a href={`/events/edit/${props.id}`}>
+    <tr>
+      <td>{props.name}</td>
+      <td>{props.last_name}</td>
+      <td>{props.mail}</td>
+      <td>{props.student_number}</td>
+      <td>{props.contact_number}</td>
+      <td>
+        <a href={`/users/edit/${props.id}`}>
           <button onClick={(e) => onDelete(e)}>
             <FontAwesomeIcon icon={faTrash} />
           </button>
         </a>
-        <a href={`/events/edit/${props.id}`}>
-          <button>
-            <FontAwesomeIcon icon={faEdit} />
-          </button>
-        </a>
-      </div>
-    </div>
+      </td>
+    </tr>
   );
 };
 
-export default withRouter(EventItem);
+export default withRouter(UserItem);

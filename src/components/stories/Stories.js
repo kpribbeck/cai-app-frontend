@@ -2,16 +2,19 @@ import React, { useEffect, Fragment, useState } from "react";
 import Spinner from "../layout/Spinner";
 import { getStories } from "../../requests/StoryRequests"
 import StoryItem from "./StoryItem";
+import './Stories.css'
 
-const Feed = () => {
+const Stories = () => {
   
   const testStories = 
   [
     {
+      "id": 0,
       "title": "First title",
       "body": "First body"
     },
     {
+      "id": 1,
       "title": "Second title",
       "body": "Second body"
     }
@@ -44,7 +47,7 @@ const Feed = () => {
 
   // var created to test feed display without making an async call to a DB
   const displayTestStories = testStories
-    .map(story => <div key={story.title}>Title: {story.title}, body: {story.body}</div>)
+    .map(story => <StoryItem key={story.id} id={story.id} title={story.title} body={story.body} />)
 
   // maps stories into individual components
   const displayStories = stories
@@ -54,20 +57,19 @@ const Feed = () => {
     <Spinner />
   ) : (
     <Fragment>
-      <h1 className="large text-dark text-center">Latest News</h1>
+      <h1>Últimas Noticias</h1>
 
-      <p className="lead mb-3 text-center">
-        <i className="fas fa-user" />
-        Welcome to CaiApp
+      <p style={{textAlign: "center", marginBottom: "30px"}}>
+        Bienvenido a CaiApp
       </p>
 
       {stories.length > 0 ? (
         displayStories
       ) : (
-        <p className="text-center"> We don't have news here yet!</p>
+        <p style={{textAlign: "center"}}> ¡Aún no tenemos historias que mostrar!</p>
       )}
     </Fragment>
   );
 };
 
-export default (Feed);
+export default (Stories);

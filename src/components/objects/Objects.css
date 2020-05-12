@@ -1,0 +1,144 @@
+h1 {
+  text-align: center;
+  font-family: sans-serif;
+  font-size: 35px;
+  color: rgb(56, 56, 56);
+  margin-bottom: 15px;
+}
+
+.item-container {
+  box-shadow: 5px 5px 16px 0px;
+  display: block;
+  max-width: 500px;
+  max-height: 270px;
+  padding: 10px;
+  margin: auto;
+  margin-bottom: 20px;
+}
+
+.item-container a.title {
+  text-align: center;
+  color: black;
+  text-decoration: none;
+}
+
+.item-container a.title:hover {
+  color: rgb(200, 170, 0);
+}
+
+.item-container a h3 {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.item-container p {
+  text-align: justify;
+}
+
+.item-container button {
+  border: none;
+  float: right;
+  background-color: rgb(255, 255, 255);
+}
+
+.item-container button:hover {
+  cursor: pointer;
+  background-color: rgb(255, 246, 233);
+}
+
+#button-bar {
+  height: 20px;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid rgb(184, 184, 184);
+}
+
+.form-container {
+  background-color: lightyellow;
+  padding: 20px;
+  border-radius: 5px;
+  width: 80%;
+  margin: auto;
+  box-sizing: border-box;
+}
+
+.form-container * {
+  box-sizing: border-box;
+}
+
+.col-20 {
+  float: left;
+  width: 20%;
+  margin-top: 5px;
+}
+
+.col-80 {
+  float: left;
+  width: 80%;
+  margin-top: 5px;
+}
+
+.row:after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+label {
+  padding: 12px 12x 12px 0;
+  display: inline-block;
+}
+
+input[type='text'],
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid rgb(221, 201, 84);
+  border-radius: 5px;
+  resize: vertical;
+}
+
+input[type='text']:focus,
+textarea:focus {
+  outline: rgb(223, 201, 78) solid 2px;
+}
+
+input[type='submit'] {
+  width: 100px;
+  margin-top: 10px;
+  padding: 12px;
+  background-color: rgb(255, 244, 92);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 2px 2px 5px 0;
+  float: right;
+}
+
+input[type='submit']:hover {
+  background-color: rgb(247, 233, 45);
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+th {
+  text-align: center;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}

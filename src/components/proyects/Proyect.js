@@ -1,22 +1,22 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { getEvent } from '../../requests/EventRequests';
+import { getProyect } from '../../requests/ProyectRequests';
 import { useParams } from 'react-router-dom';
-import EventItem from './EventItem';
+import ProyectItem from './ProyectItem';
 import Spinner from '../layout/Spinner';
 
-const Event = () => {
+const Proyect = () => {
   const urlParams = useParams();
 
-  const [event, setEvent] = useState(null);
+  const [proyect, setProyect] = useState(null);
   const [loading, setLoading] = useState(true);
 
   // makes async call to DB
-  const getData = async (eventId) => {
+  const getData = async (proyectId) => {
     try {
       setLoading(true);
-      const res = await getEvent(eventId);
+      const res = await getProyect(proyectId);
       setLoading(false);
-      setEvent(res.data);
+      setProyect(res.data);
     } catch (err) {
       setLoading(false);
       console.log('Error: ' + err);
@@ -32,10 +32,10 @@ const Event = () => {
   ) : (
     <Fragment>
       <div className='mt-3'>
-        <EventItem {...event} />
+        <ProyectItem {...proyect} />
       </div>
     </Fragment>
   );
 };
 
-export default Event;
+export default Proyect;

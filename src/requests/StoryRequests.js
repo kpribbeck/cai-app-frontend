@@ -1,20 +1,17 @@
-import axios from "axios";
-
-// const default_url = "http://localhost:3000";
-const default_url = "https://protected-tor-10719.herokuapp.com";
+import { axiosInstance } from "./AxiosInstance";
+import { authHeader } from "../helpers/authHeader";
 
 export const getStories = () => 
 {
   try
   {
-    let path = `${ default_url}`;
-    path = path.concat(`/stories`);
+    let path = '/stories';
 
-    return axios.get(path);
+    return axiosInstance.get(path, authHeader());
   }
-  catch(err)
+  catch (err)
   {
-    console.log("Error: " + err);
+    console.log('Error: ' + err);
   }
 }
 
@@ -22,10 +19,9 @@ export const getStory = (id) =>
 {
   try
     {
-      let path = `${default_url}`;
-      path = path.concat(`/stories/${id}`);
+      let path = `/stories/${id}`;
 
-      return axios.get(path);
+      return axiosInstance.get(path, authHeader());
     }
     catch(err)
     {
@@ -37,14 +33,13 @@ export const postStory = (formData) =>
 {
   try
   {
-    let path = `${default_url}`;
-    path = path.concat(`/stories`);
+    let path = `/stories`;
 
-    return axios.post(path, formData);
+    return axiosInstance.post(path, formData, authHeader());
   }
-  catch(err)
+  catch (err)
   {
-    console.log("Error: " + err);
+    console.log('Error: ' + err);
   }
 }
 
@@ -52,14 +47,13 @@ export const putStory = (id, formData) =>
 {
   try
   {
-    let path = `${default_url}`;
-    path = path.concat(`/stories/${id}`);
+    let path = `/stories/${id}`;
 
-    return axios.put(path, formData);
+    return axiosInstance.put(path, formData, authHeader());
   }
-  catch(err)
+  catch (err)
   {
-    console.log("Error: " + err);
+    console.log('Error: ' + err);
   }
 }
 
@@ -67,10 +61,9 @@ export const deleteStory = (id) =>
 {
   try
     {
-      let path = `${default_url}`;
-      path = path.concat(`/stories/${id}`);
+      let path = `/stories/${id}`;
 
-      return axios.delete(path);
+      return axiosInstance.delete(path, authHeader());
     }
     catch(err)
     {

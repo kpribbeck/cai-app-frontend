@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { getStory } from "../../requests/StoryRequests";
 import { useParams } from "react-router-dom";
-import StoryItem from "../feed/StoryItem";
+import StoryItem from "./StoryItem";
 import Spinner from "../layout/Spinner";
 
 const Note = () => 

@@ -1,13 +1,7 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useLocation, withRouter } from "react-router-dom";
 import { getStory, postStory, putStory } from "../../requests/StoryRequests";
 import Spinner from "../layout/Spinner";
-import { 
-  Form,
-  FormGroup,
-  Label,
-  Input,
-} from "reactstrap";
 
 const StoryEditor = ({ history }) => 
 {
@@ -77,8 +71,9 @@ const StoryEditor = ({ history }) =>
       {
         // POST
         setLoading(true);
-        await postStory(formData);
+        const res = await postStory(formData);
         setLoading(false);
+        console.log("RES: " + res);
         history.push('/');
 
       }
@@ -104,34 +99,48 @@ const StoryEditor = ({ history }) =>
   return loading ? (
     <Spinner />
   ) : (
-    <Fragment>
-      <h1 className="large text-dark text-center">Story form</h1>
-      <Form onSubmit={e => onSubmit(e)}>
-        <FormGroup>
-          <Label for="exampleTitle">Title</Label>
-          <Input
-            type="text"
-            placeholder="Title"
-            name="title"
-            value={title}
-            onChange={e => onChange(e)}
-            required
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label>Body for your story</Label>
-          <Input
-            type="textarea"
-            name="body"
-            placeholder="Write body"
-            value={body}
-            onChange={e => onChange(e)}
-            required
-          />
-        </FormGroup>
-        <input type="submit" className="btn btn-primary my-1" value="Save" />
-      </Form>
-    </Fragment>
+    <div>
+      <h1>Form para Noticias</h1>
+      <div className="form-container">
+        <form onSubmit={e => onSubmit(e)}>
+          <div className="row">
+            <div className="col-20">
+              <label htmlFor="title">Title:</label><br />
+            </div>
+            <div className="col-80">
+              <input
+                type="text"
+                id="title"
+                name="title"
+                value={title}
+                onChange={e => onChange(e)}
+                required
+              />
+              <br />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-20">
+              <label htmlFor="body">Body:</label><br />
+            </div>
+            <div className="col-80">
+              <textarea
+                style={{height: "200px"}}
+                id="body"
+                name="body"
+                value={body}
+                onChange={e => onChange(e)}
+                required
+              />
+              <br />
+            </div>
+          </div>
+          <div className="row">
+            <input type="submit" value="Publicar" />
+          </div>
+        </form>
+      </div>
+    </div>
   )
 }
 

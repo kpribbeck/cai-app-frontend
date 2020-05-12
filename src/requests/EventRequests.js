@@ -1,34 +1,56 @@
-import axios from "axios";
+import { axiosInstance } from "./AxiosInstance";
+import { authHeader } from "../helpers/authHeader";
 
-// const default_url = "http://localhost:3000";
-const default_url = "https://protected-tor-10719.herokuapp.com";
+export const getEvents = () => {
+  try {
+    let path = '/events';
 
-export const getEvents = () => 
-{
-  try
-  {
-    let path = `${process.env.BACKEND_URL || default_url}`;
-    path = path.concat(`/events`);
-
-    return axios.get(path);
+    return axiosInstance.get(path, authHeader());
+  } 
+  catch (err) {
+    console.log('Error: ' + err);
   }
-  catch(err)
-  {
-    console.log("Error: " + err);
-  }
-}
+};
 
 export const getEvent = (id) =>
 {
-  try
-    {
-      let path = `${process.env.BACKEND_URL || default_url}`;
-      path = path.concat(`/events/${id}`);
+  try {
+    let path = `/events/${id}`;
 
-      return axios.get(path);
-    }
-    catch(err)
-    {
-      console.log("Error: " + err);
-    }
-}
+    return axiosInstance.get(path, authHeader());
+  }
+  catch (err) {
+    console.log('Error: ' + err);
+  }
+};
+
+export const postEvent = (formData) => {
+  try {
+    let path = `/events`;
+
+    return axiosInstance.post(path, formData, authHeader());
+  }
+  catch (err) {
+    console.log('Error: ' + err);
+  }
+};
+
+export const putEvent = (id, formData) => {
+  try {
+    let path = `/events/${id}`;
+
+    return axiosInstance.put(path, formData, authHeader());
+  } catch (err) {
+    console.log('Error: ' + err);
+  }
+};
+
+export const deleteEvent = (id) => {
+  try {
+    let path = `/events/${id}`;
+
+    return axiosInstance.delete(path, authHeader());
+  } catch (err) {
+    console.log('Error: ' + err);
+  }
+};
