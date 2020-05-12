@@ -1,10 +1,9 @@
-import axios from 'axios';
+import { axiosInstance } from "./AxiosInstance";
 import { BehaviorSubject } from 'rxjs';
 import setAuthToken from '../helpers/setAuthToken';
 import { axiosInstance } from './AxiosInstance';
 import { authHeader } from '../helpers/authHeader';
 
-const default_url = 'http://localhost:3000';
 
 // Register a User
 export const postUser = async (formData) => {
@@ -17,7 +16,7 @@ export const postUser = async (formData) => {
     let path = `${process.env.BACKEND_URL || default_url}`;
     path = path.concat(`/auth/sign-up`);
 
-    const res = await axios.post(path, formData, config);
+    const res = await axiosInstance.post(path, formData, config);
 
     console.log('RES: ' + JSON.stringify(res));
     console.log('RES.payload: ' + JSON.stringify(res.data));
@@ -56,7 +55,7 @@ export const authUser = async (formData) => {
     let path = `${process.env.BACKEND_URL || default_url}`;
     path = path.concat(`/auth/log-in`);
 
-    const res = await axios.post(path, formData, config);
+    const res = await axiosInstance.post(path, formData, config);
 
     if (res.status !== 200) {
       logout();
