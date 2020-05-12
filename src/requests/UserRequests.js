@@ -1,4 +1,3 @@
-import { axiosInstance } from "./AxiosInstance";
 import { BehaviorSubject } from 'rxjs';
 import setAuthToken from '../helpers/setAuthToken';
 import { axiosInstance } from './AxiosInstance';
