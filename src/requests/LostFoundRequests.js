@@ -1,9 +1,9 @@
 import { axiosInstance } from "./AxiosInstance";
 import { authHeader } from "../helpers/authHeader";
 
-export const getObjects = () => {
+export const getLostFounds = () => {
   try {
-    let path = "/objects";
+    let path = "/lost-founds";
 
     return axiosInstance.get(path, authHeader());
   } catch (err) {
@@ -11,9 +11,9 @@ export const getObjects = () => {
   }
 };
 
-export const getObject = (id) => {
+export const getLostFound = (id) => {
   try {
-    let path = `/objects/${id}`;
+    let path = `/lost-founds/${id}`;
 
     return axiosInstance.get(path, authHeader());
   } catch (err) {
@@ -21,18 +21,18 @@ export const getObject = (id) => {
   }
 };
 
-export const postObject = (formData) => {
+export const postLostFound = (formData) => {
   try {
-    let path = `/objects`;
+    let path = `/lost-founds`;
     return axiosInstance.post(path, formData, authHeader());
   } catch (err) {
     console.log("Error: " + err);
   }
 };
 
-export const putObject = (id, formData) => {
+export const putLostFound = (id, formData) => {
   try {
-    let path = `/objects/${id}`;
+    let path = `/lost-founds/${id}`;
 
     return axiosInstance.put(path, formData, authHeader());
   } catch (err) {
@@ -40,9 +40,9 @@ export const putObject = (id, formData) => {
   }
 };
 
-export const deleteObject = (id) => {
+export const deleteLostFound = (id) => {
   try {
-    let path = `/objects/${id}`;
+    let path = `/lost-founds/${id}`;
 
     return axiosInstance.delete(path, authHeader());
   } catch (err) {

@@ -7,11 +7,13 @@ import {
 } from '../../requests/ProyectRequests';
 import Spinner from '../layout/Spinner';
 
-const ProyectEditor = ({ history }) => {
+const ProyectEditor = ({ createNotification, history }) => {
   const urlParams = useParams();
   const currentUrl = useLocation();
 
   const [loading, setLoading] = useState(false);
+
+  const [errors, setErrors] = useState({});
 
   const [proyectId, setProyectId] = useState(null);
 
@@ -71,7 +73,8 @@ const ProyectEditor = ({ history }) => {
         setLoading(true);
         const res = await postProyect(formData);
         setLoading(false);
-        console.log('RES: ' + res);
+        
+        createNotification("¡Felicitaciones!", "Has creado un nuevo proyecto correctamente.");
         history.push('/proyects');
       } else {
         // PUT
@@ -79,13 +82,23 @@ const ProyectEditor = ({ history }) => {
         console.log(formData);
         await putProyect(proyectId, formData);
         setLoading(false);
+
+        createNotification("¡Felicitaciones!", "Has modificado un proyecto correctamente.");
         history.push('/proyects');
       }
     } catch (err) {
       setLoading(false);
-      console.log('Error: ' + err);
+      setErrors({
+        request: {
+          message: "Error de servidor. Intente más tarde."
+        }
+      })
+      console.error(err);
     }
   };
+
+  const displayErrors = Object.keys(errors)
+    .map(error => (<p className="error-message" key={error}>{errors[error].message}</p>))
 
   return loading ? (
     <Spinner />
@@ -94,9 +107,12 @@ const ProyectEditor = ({ history }) => {
       <h1>Form para Proyectos</h1>
       <div className='form-container'>
         <form onSubmit={(e) => onSubmit(e)}>
+          <div className="row">
+            {Object.keys(errors).length > 0 && displayErrors}
+          </div>
           <div className='row'>
             <div className='col-20'>
-              <label htmlFor='name'>Name:</label>
+              <label htmlFor='name'>Nombre:</label>
               <br />
             </div>
             <div className='col-80'>
@@ -113,7 +129,7 @@ const ProyectEditor = ({ history }) => {
           </div>
           <div className='row'>
             <div className='col-20'>
-              <label htmlFor='description'>Description:</label>
+              <label htmlFor='description'>Descripción:</label>
               <br />
             </div>
             <div className='col-80'>
@@ -130,7 +146,7 @@ const ProyectEditor = ({ history }) => {
           </div>
           <div className='row'>
             <div className='col-20'>
-              <label htmlFor='contact'>Contact:</label>
+              <label htmlFor='contact'>Contacto:</label>
               <br />
             </div>
             <div className='col-80'>
@@ -147,7 +163,7 @@ const ProyectEditor = ({ history }) => {
           </div>
           <div className='row'>
             <div className='col-20'>
-              <label htmlFor='picture'>Picture URL:</label>
+              <label htmlFor='picture'>URL imagen:</label>
               <br />
             </div>
             <div className='col-80'>

@@ -1,26 +1,9 @@
-import React, { Fragment, useState, useEffect } from 'react';
-import Spinner from '../layout/Spinner';
-import { getProyects } from '../../requests/ProyectRequests';
-import ProyectItem from './ProyectItem';
+import React, { Fragment, useState, useEffect } from "react";
+import Spinner from "../layout/Spinner";
+import { getProyects } from "../../requests/ProyectRequests";
+import ProyectItem from "./ProyectItem";
 
-const Proyects = () => {
-  const testProyects = [
-    {
-      id: 0,
-      name: 'First name',
-      description: 'First proyect description',
-      contact: 'First contact',
-      picture: 'First pic url',
-    },
-    {
-      id: 0,
-      name: 'Second name',
-      description: 'Second proyect description',
-      contact: 'Second contact',
-      picture: 'Second pic url',
-    },
-  ];
-
+const Proyects = ({ createNotification }) => {
   const [proyects, setProyects] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -32,7 +15,7 @@ const Proyects = () => {
       setProyects(res.data);
     } catch (err) {
       setLoading(false);
-      console.log('Error: ' + err);
+      console.log("Error: " + err);
     }
   };
 
@@ -41,16 +24,6 @@ const Proyects = () => {
     getData();
   }, []);
 
-  const displayTestProyects = testProyects.map((proyect) => (
-    <ProyectItem
-      key={proyect.id}
-      id={proyect.id}
-      name={proyect.name}
-      description={proyect.description}
-      contact={proyect.contact}
-    />
-  ));
-
   const displayProyects = proyects.map((proyect) => (
     <ProyectItem
       key={proyect.id}
@@ -58,6 +31,7 @@ const Proyects = () => {
       name={proyect.name}
       description={proyect.description}
       contact={proyect.contact}
+      createNotification={createNotification}
     />
   ));
 
@@ -65,12 +39,12 @@ const Proyects = () => {
     <Spinner />
   ) : (
     <Fragment>
-      <h1 className='large text-dark text-center'>Últimos proyectos</h1>
+      <h1 className="large text-dark text-center">Últimos proyectos</h1>
 
       {proyects.length > 0 ? (
         displayProyects
       ) : (
-        <p className='text-center'> ¡Aún no tenemos proyectos!</p>
+        <p className="text-center"> ¡Aún no tenemos proyectos!</p>
       )}
     </Fragment>
   );

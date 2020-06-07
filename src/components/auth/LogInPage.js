@@ -4,7 +4,7 @@ import LogInForm from "./LogInForm";
 import Spinner from "../layout/Spinner"
 import { authUser } from "../../requests/UserRequests";
 
-const LogInPage = ({ history }) => 
+const LogInPage = ({ createNotification, history }) => 
 {
   const [loading, setLoading] = useState(false);
 
@@ -34,25 +34,31 @@ const LogInPage = ({ history }) =>
       setLoading(true);
       const res = await authUser(formData);
       setLoading(false);
-      setErrors({
-        request: {
-          message: ""
-        }
-      })
 
+      if (res.status != "200")
+      {
+        // invalid form
+        setErrors({
+          request: {
+            message: res.message
+          }
+        })
+        return;
+      }
+      
+      createNotification("¡Felicitaciones!", "Has ingresado correctamente al sistema.");
       history.push('/');
     }
     catch(err)
     {
       setLoading(false);
 
-      // Fix errors system, only request errors should be catched, form errors should be handled inside try block
       setErrors({
         request: {
-          message: "Form is not valid."
+          message: "Error de servidor. Intente más tarde."
         }
       })
-      console.log("Error: " + err);
+      console.error(err);
     }
   };
 

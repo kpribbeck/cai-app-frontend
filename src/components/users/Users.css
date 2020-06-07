@@ -81,7 +81,7 @@ hr {
 }
 
 .row:after {
-  content: '';
+  content: "";
   display: table;
   clear: both;
 }
@@ -91,7 +91,7 @@ label {
   display: inline-block;
 }
 
-input[type='text'],
+input[type="text"],
 textarea {
   width: 100%;
   padding: 10px;
@@ -100,12 +100,12 @@ textarea {
   resize: vertical;
 }
 
-input[type='text']:focus,
+input[type="text"]:focus,
 textarea:focus {
   outline: rgb(223, 201, 78) solid 2px;
 }
 
-input[type='submit'] {
+input[type="submit"] {
   width: 100px;
   margin-top: 10px;
   padding: 12px;
@@ -117,7 +117,7 @@ input[type='submit'] {
   float: right;
 }
 
-input[type='submit']:hover {
+input[type="submit"]:hover {
   background-color: rgb(247, 233, 45);
 }
 
@@ -132,7 +132,7 @@ table {
 td,
 th {
   border: 1px solid #dddddd;
-  text-align: left;
+  text-align: center;
   padding: 8px;
 }
 th {
@@ -141,4 +141,50 @@ th {
 
 tr:nth-child(even) {
   background-color: #dddddd;
+}
+
+#accept-button {
+  width: 100px;
+  background-color: rgb(233, 216, 60);
+  color: white;
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  padding: 5px;
+}
+
+#accept-button:hover {
+  cursor: pointer;
+  background-color: rgb(255, 232, 29);
+}
+
+#reject-button {
+  width: 100px;
+  background-color: rgb(65, 65, 65);
+  color: white;
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  padding: 5px;
+}
+
+#reject-button:hover {
+  cursor: pointer;
+  background-color: rgb(97, 97, 97);
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  width: 600px;
+  margin: auto;
+  margin-top: 30px;
+  text-align: left;
+  padding: 50px;
+}
+
+.title {
+  color: grey;
+  font-size: 30px;
 }

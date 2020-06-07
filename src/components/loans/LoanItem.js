@@ -4,9 +4,8 @@ import { deleteObject } from "../../requests/ObjectRequests";
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Spinner from "../layout/Spinner";
-import "./Objects.css";
 
-const ObjectItem = (props) => {
+const LoanItem = (props) => {
   const [loading, setLoading] = useState(false);
 
   const onDelete = async (e) => {
@@ -34,7 +33,7 @@ const ObjectItem = (props) => {
       <td>{props.name}</td>
       <td>{props.description}</td>
       <td>{props.stock}</td>
-      <td>$ {props.price}</td>
+      <td>{props.price === 0 ? "Disponible" : "Prestado"}</td>
       <td>
         <a href={`/objects/edit/${props.id}`}>
           <button onClick={(e) => onDelete(e)}>
@@ -53,4 +52,4 @@ const ObjectItem = (props) => {
   );
 };
 
-export default withRouter(ObjectItem);
+export default withRouter(LoanItem);

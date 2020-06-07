@@ -1,29 +1,25 @@
 import React from "react";
-import './Auth.css';
+import "./Auth.css";
 
-
-const LogInForm = ({
-  onSubmit,
-  onChange,
-  errors,
-  formData
-}) => 
-{
-
-  const displayErrors = Object.keys(errors)
-    .map(error => (<p className="error-message" key={error}>{errors[error].message}</p>))
+const LogInForm = ({ onSubmit, onChange, errors, formData }) => {
+  const displayErrors = Object.keys(errors).map((error) => (
+    <p className="error-message" key={error}>
+      {errors[error].message}
+    </p>
+  ));
 
   return (
     <div>
       <h1>Ingresar</h1>
       <div className="form-container">
-        <form onSubmit={e => onSubmit(e)}>
+        <form onSubmit={(e) => onSubmit(e)}>
           <div className="row">
             {Object.keys(errors).length > 0 && displayErrors}
           </div>
           <div className="row">
             <div className="col-25">
-              <label htmlFor="mail">Mail:</label><br />
+              <label htmlFor="mail">Mail:</label>
+              <br />
             </div>
             <div className="col-75">
               <input
@@ -31,7 +27,7 @@ const LogInForm = ({
                 id="mail"
                 name="mail"
                 value={formData.mail}
-                onChange={e => onChange(e)}
+                onChange={(e) => onChange(e)}
                 required
               />
               <br />
@@ -39,7 +35,8 @@ const LogInForm = ({
           </div>
           <div className="row">
             <div className="col-25">
-              <label htmlFor="password">Contraseña:</label><br />
+              <label htmlFor="password">Contraseña:</label>
+              <br />
             </div>
             <div className="col-75">
               <input
@@ -48,7 +45,7 @@ const LogInForm = ({
                 name="password"
                 minLength="6"
                 value={formData.password}
-                onChange={e => onChange(e)}
+                onChange={(e) => onChange(e)}
                 required
               />
               <br />
@@ -60,7 +57,7 @@ const LogInForm = ({
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default LogInForm;

@@ -1,40 +1,21 @@
-import React, { Fragment, useState, useEffect } from 'react';
-import Spinner from '../layout/Spinner';
-import { getUsers } from '../../requests/UserRequests';
-import UserItem from './UserItem';
+import React, { Fragment, useState, useEffect } from "react";
+import Spinner from "../layout/Spinner";
+import { getUsersByState } from "../../requests/UserRequests";
+import UserItem from "./UserItem";
 
-const Users = () => {
-  const testUsers = [
-    {
-      id: 0,
-      mail: 'first@mail.com',
-      name: 'Name1',
-      last_name: 'LastName1',
-      student_number: '12345678',
-      contact_number: '+5623456789',
-    },
-    {
-      id: 1,
-      mail: 'second@mail.com',
-      name: 'Name2',
-      last_name: 'LastName2',
-      student_number: '12345678',
-      contact_number: '+5623456789',
-    },
-  ];
-
+const Users = ({ createNotification }) => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const getData = async () => {
     try {
       setLoading(true);
-      const res = await getUsers();
+      const res = await getUsersByState("1"); // accepted users only
       setLoading(false);
       setUsers(res.data);
     } catch (err) {
       setLoading(false);
-      console.log('Error: ' + err);
+      console.log("Error: " + err);
     }
   };
 
@@ -43,35 +24,27 @@ const Users = () => {
     getData();
   }, []);
 
-  const displayTestUsers = testUsers.map((user) => (
-    <UserItem
-      key={user.id}
-      id={user.id}
-      name={user.name}
-      last_name={user.last_name}
-      mail={user.mail}
-      student_number={user.student_number}
-      contact_number={user.contact_number}
-    />
-  ));
-
-  const displayUsers = users.map((user) => (
-    <UserItem
-      key={user.id}
-      id={user.id}
-      name={user.name}
-      last_name={user.last_name}
-      mail={user.mail}
-      student_number={user.student_number}
-      contact_number={user.contact_number}
-    />
-  ));
+  const displayUsers = users.map(
+    (user) =>
+      user.is_admin !== 1 && (
+        <UserItem
+          key={user.id}
+          id={user.id}
+          name={user.name}
+          last_name={user.last_name}
+          mail={user.mail}
+          student_number={user.student_number}
+          contact_number={user.contact_number}
+          createNotification={createNotification}
+        />
+      )
+  );
 
   return loading ? (
     <Spinner />
   ) : (
     <Fragment>
-      <h1 className='large text-dark text-center'>Usuarios</h1>
+      <h1 className="large text-dark text-center">Usuarios</h1>
       <br></br>
       <table>
         <thead>
@@ -84,9 +57,7 @@ const Users = () => {
             <th>Borrar</th>
           </tr>
         </thead>
-        <tbody>
-          {displayUsers}
-        </tbody>
+        <tbody>{displayUsers}</tbody>
       </table>
     </Fragment>
   );

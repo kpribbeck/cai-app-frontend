@@ -1,0 +1,32 @@
+.popup-container {
+  position: fixed;
+  background-color: rgba(62, 189, 62, 0.5);
+  right: -0px;
+  top: 75px;
+  width: 220px;
+  height: 80px;
+  padding: 10px;
+  z-index: 2;
+  animation-name: pop-up;
+  animation-duration: 3s;
+}
+
+#popup-title {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: larger;
+  color: white;
+  margin-bottom: 10px;
+}
+
+#popup-message {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: medium;
+  color: white;
+}
+
+@keyframes pop-up {
+  0%   {right: -230px;}
+  20%  {right: 0px;}
+  80%  {right: 0px}
+  100% {right: -230px;}
+}

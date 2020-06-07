@@ -1,0 +1,96 @@
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  color: white;
+  text-align: right;
+}
+
+.dropup {
+  position: relative;
+  display: inline-block;
+  margin-left: 3px;
+}
+
+.dropup-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  width: 300px;
+  height: 300px;
+  bottom: 50px;
+  z-index: 1;
+}
+
+.messages {
+  overflow: scroll;
+  height: 263px;
+}
+
+.dropup-content li {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  width: 270px;
+  text-align: left;
+}
+
+.dropup-content li:hover {
+  background-color: #ccc;
+}
+
+.dropup .dropup-content {
+  display: block;
+  width: 300px;
+  border-right: solid gray;
+  border-top: solid gray;
+  border-left: solid gray;
+  border-width: 1px;
+}
+
+.dropup:hover .dropbtn {
+  background-color: #2980b9;
+}
+
+.upbtn {
+  background-color: #3498db;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  width: 302px;
+}
+
+#mine {
+  text-align: right;
+}
+
+#other {
+  text-align: left;
+}
+
+#hide {
+  visibility: hidden;
+}
+
+.input {
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  width: 194px !important;
+  border-radius: 0px;
+}
+
+.button {
+  position: absolute;
+  bottom: 0;
+  left: 215px;
+  background-color: gray; /* Green */
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  font-size: 16px;
+}

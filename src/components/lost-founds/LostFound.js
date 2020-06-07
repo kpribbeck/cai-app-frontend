@@ -1,25 +1,25 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import {
-  getLost_n_found,
-  getLost_n_founds,
-} from '../../requests/Lost_n_foundRequests';
+  getLostFound,
+  getLostFounds,
+} from '../../requests/LostFoundRequests';
 import { useParams } from 'react-router-dom';
-import Lost_n_foundItem from './Lost_n_foundItem';
+import LostFoundItem from './LostFoundItem';
 import Spinner from '../layout/Spinner';
 
-const Lost_n_found = () => {
+const LostFound = () => {
   const urlParams = useParams();
 
-  const [lost_n_found, setLost_n_found] = useState(null);
+  const [lostFound, setLostFound] = useState(null);
   const [loading, setLoading] = useState(true);
 
   // makes async call to DB
-  const getData = async (lost_n_foundId) => {
+  const getData = async (lostFoundId) => {
     try {
       setLoading(true);
-      const res = await getLost_n_found(lost_n_foundId);
+      const res = await getLostFound(lostFoundId);
       setLoading(false);
-      setLost_n_found(res.data);
+      setLostFound(res.data);
     } catch (err) {
       setLoading(false);
       console.log('Error: ' + err);
@@ -35,10 +35,10 @@ const Lost_n_found = () => {
   ) : (
     <Fragment>
       <div className='mt-3'>
-        <Lost_n_foundItem {...lost_n_found} />
+        <LostFoundItem {...lostFound} />
       </div>
     </Fragment>
   );
 };
 
-export default Lost_n_found;
+export default LostFound;
