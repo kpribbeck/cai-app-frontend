@@ -52,6 +52,8 @@ const LostFounds = ({ createNotification }) => {
             <th>Nombre dueño</th>
             <th>Entregado</th>
             <th>Imagen</th>
+            <th>Borrar</th>
+            <th>Editar</th>
           </tr>
           {displayLostFounds}
         </tbody>
