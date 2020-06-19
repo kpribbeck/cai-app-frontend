@@ -12,6 +12,7 @@ const SignUpPage = ({ createNotification, history }) => {
 
   const [errors, setErrors] = useState({});
   const [userId, setUserId] = useState();
+  const [uploadedfile, setFile] = useState(null)
   const [edit, setEdit] = useState(false);
   const [formData, setFormData] = useState({
     mail: "",
@@ -21,7 +22,7 @@ const SignUpPage = ({ createNotification, history }) => {
     last_name: "",
     student_number: "",
     contact_number: "",
-    picture: null,
+    picture: "",
     job: "",
   });
 
@@ -50,6 +51,7 @@ const SignUpPage = ({ createNotification, history }) => {
         student_number: filtered.student_number,
         contact_number: filtered.contact_number,
         job: filtered.job,
+        picture: filtered.picture,
       });
     } catch (err) {
       setLoading(false);
@@ -89,6 +91,38 @@ const SignUpPage = ({ createNotification, history }) => {
     setFormData(newState);
   };
 
+  const onUpload = (e) => {
+    // hanlde image upload
+    const file = e.target.files[0];
+
+    console.log(file);
+
+    const types = ["image/png", "image/jpeg", "image/gif"];
+
+    if (types.every((type) => file.type !== type)) {
+      // error, unsupported type
+      setErrors({
+        upload: {
+          message: `El formato ${file.type} no está soportado por el sistema. Ingrese un archivo jpeg o png.`,
+        },
+      });
+      return;
+    }
+
+    if (file.size > 500000) {
+      // error, file too large
+      setErrors({
+        upload: {
+          message: `El tamaño de la imagen es demasiado grande.`,
+        },
+      });
+      return;
+    }
+
+    // update state
+    setFile(file);
+  };
+
   const onSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
@@ -103,11 +137,24 @@ const SignUpPage = ({ createNotification, history }) => {
       return;
     }
 
+    // pass form data to a FormData html5 object, so that file gets sent correctly
+    const form = new FormData();
+    form.append("mail", formData.mail);
+    form.append("password", formData.password);
+    form.append("verifyPassword", formData.verifyPassword);
+    form.append("name", formData.name);
+    form.append("last_name", formData.last_name);
+    form.append("student_number", formData.student_number);
+    form.append("contact_number", formData.contact_number);
+    form.append("job", formData.job);
+    form.append("picture", formData.picture);
+    form.append("file", uploadedfile);
+
     try {
       if (currentUrl.pathname === "/sign-up") {
         // POST
         setLoading(true);
-        const res = await postUser(formData);
+        const res = await postUser(form);
         setLoading(false);
 
         if (res.status != "201") {
@@ -128,7 +175,7 @@ const SignUpPage = ({ createNotification, history }) => {
       } else {
         // PUT
         setLoading(true);
-        const res = await putUser(userId, formData);
+        const res = await putUser(userId, form);
         setLoading(false);
         
         if (res.status != "201") {
@@ -165,6 +212,7 @@ const SignUpPage = ({ createNotification, history }) => {
     <SignUpForm
       onSubmit={onSubmit}
       onChange={onChange}
+      onUpload={onUpload}
       errors={errors}
       formData={formData}
       edit={edit}

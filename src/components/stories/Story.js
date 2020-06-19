@@ -31,6 +31,7 @@ const Note = () => {
     <Spinner />
   ) : (
     <Fragment>
+      <br/>
       <div className="mt-3">
         <StoryItem {...story} />
       </div>

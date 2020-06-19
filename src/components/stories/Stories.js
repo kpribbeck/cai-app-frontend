@@ -2,11 +2,13 @@ import React, { useEffect, Fragment, useState } from "react";
 import Spinner from "../layout/Spinner";
 import { getStories } from "../../requests/StoryRequests";
 import StoryItem from "./StoryItem";
-import "./Stories.css";
+import FilterBox from "../layout/FilterBox";
+import "../layout/main.css";
 
 const Stories = ({ createNotification }) => {
   const [stories, setStories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState("");
 
   // makes an async call to the DB
   const getData = async () => {
@@ -27,34 +29,35 @@ const Stories = ({ createNotification }) => {
   }, []);
 
   // maps stories into individual components
-  const displayStories = stories.map((story) => (
-    <StoryItem
-      key={story.id}
-      id={story.id}
-      title={story.title}
-      body={story.body}
-      createNotification={createNotification}
-      userId={story.userId}
-    />
-  ));
+  const displayStories = stories.map(
+    (story) =>
+      (story.title.toLowerCase().includes(filter.toLowerCase()) ||
+        story.body.toLowerCase().includes(filter.toLowerCase())) && (
+        <StoryItem
+          key={story.id}
+          id={story.id}
+          title={story.title}
+          body={story.body}
+          createNotification={createNotification}
+          userId={story.userId}
+          getData={getData}
+        />
+      )
+  );
 
   return loading ? (
     <Spinner />
   ) : (
     <Fragment>
-      <h1>Últimas Noticias</h1>
+      <FilterBox value={filter} onChange={setFilter} />
+      <h1 className="titles">Últimas Noticias</h1>
 
-      <p style={{ textAlign: "center", marginBottom: "30px" }}>
-        Bienvenido a CaiApp
-      </p>
+      <p className="texto">Bienvenido a CaiApp</p>
 
       {stories.length > 0 ? (
         displayStories
       ) : (
-        <p style={{ textAlign: "center" }}>
-          {" "}
-          ¡Aún no tenemos historias que mostrar!
-        </p>
+        <p className="texto"> ¡Aún no tenemos historias que mostrar!</p>
       )}
     </Fragment>
   );

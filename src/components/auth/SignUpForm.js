@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import "./Auth.css";
+import UploadButton from "../layout/UploadButton";
 
-const SignUpForm = ({ onSubmit, onChange, errors, formData, edit }) => {
+const SignUpForm = ({ onSubmit, onChange, onUpload, errors, formData, edit }) => {
   const [showpass, setShowpass] = useState(edit ? false : true);
   const displayErrors = Object.keys(errors).map((error) => (
     <p className="error-message" key={error}>
@@ -11,7 +12,7 @@ const SignUpForm = ({ onSubmit, onChange, errors, formData, edit }) => {
 
   return (
     <div>
-      <h1>{edit ? "Editar" : "Crear"} Cuenta</h1>
+      <h1 className="titles">{edit ? "Editar" : "Crear"} Cuenta</h1>
       <div className="form-container">
         <form onSubmit={(e) => onSubmit(e)}>
           <div className="row">
@@ -107,6 +108,18 @@ const SignUpForm = ({ onSubmit, onChange, errors, formData, edit }) => {
                 required
               />
               <br />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-25">
+              <label htmlFor="picture">Foto de perfil:</label>
+              <br />
+            </div>
+            <div className="col-75">
+              {formData.picture !== "" && (
+                <div>URL actual: {formData.picture}</div>
+              )}
+              <UploadButton onChange={onUpload} />
             </div>
           </div>
           <div className="row">

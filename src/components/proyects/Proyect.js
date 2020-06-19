@@ -31,6 +31,7 @@ const Proyect = () => {
     <Spinner />
   ) : (
     <Fragment>
+      <br/>
       <div className='mt-3'>
         <ProyectItem {...proyect} />
       </div>

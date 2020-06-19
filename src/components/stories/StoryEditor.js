@@ -105,7 +105,7 @@ const StoryEditor = ({ createNotification, history }) => {
     <Spinner />
   ) : (
     <div>
-      <h1>Form para Noticias</h1>
+      <h1 className="titles">Form para Noticias</h1>
       <div className="form-container">
         <form onSubmit={(e) => onSubmit(e)}>
           <div className="row">

@@ -31,6 +31,7 @@ const Event = () => {
     <Spinner />
   ) : (
     <Fragment>
+      <br/>
       <div className='mt-3'>
         <EventItem {...event} />
       </div>

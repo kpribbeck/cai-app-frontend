@@ -2,10 +2,12 @@ import React, { Fragment, useState, useEffect } from "react";
 import Spinner from "../layout/Spinner";
 import { getEvents } from "../../requests/EventRequests";
 import EventItem from "./EventItem";
+import FilterBox from "../layout/FilterBox";
 
 const Events = ({ createNotification }) => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState("");
 
   const getData = async () => {
     try {
@@ -24,29 +26,35 @@ const Events = ({ createNotification }) => {
     getData();
   }, []);
 
-  const displayEvents = events.map((event) => (
-    <EventItem
-      key={event.id}
-      id={event.id}
-      title={event.title}
-      description={event.description}
-      place={event.place}
-      category={event.category}
-      createNotification={createNotification}
-      userId={event.userId}
-    />
-  ));
+  const displayEvents = events.map(
+    (event) =>
+      (event.title.toLowerCase().includes(filter.toLowerCase()) ||
+        event.description.toLowerCase().includes(filter.toLowerCase())) && (
+        <EventItem
+          key={event.id}
+          id={event.id}
+          title={event.title}
+          description={event.description}
+          place={event.place}
+          category={event.category}
+          createNotification={createNotification}
+          userId={event.userId}
+          getData={getData}
+        />
+      )
+  );
 
   return loading ? (
     <Spinner />
   ) : (
     <Fragment>
-      <h1 className="large text-dark text-center">Últimos eventos</h1>
+      <FilterBox value={filter} onChange={setFilter} />
+      <h1 className="titles">Eventos</h1>
 
       {events.length > 0 ? (
         displayEvents
       ) : (
-        <p className="text-center"> ¡Aún no tenemos eventos!</p>
+        <p className="textos"> ¡Aún no tenemos eventos!</p>
       )}
     </Fragment>
   );

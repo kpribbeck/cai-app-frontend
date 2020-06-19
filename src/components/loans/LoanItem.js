@@ -1,12 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { withRouter } from "react-router-dom";
 import { deleteObject } from "../../requests/ObjectRequests";
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Spinner from "../layout/Spinner";
+import { authUserService } from "../../requests/UserRequests";
 
 const LoanItem = (props) => {
   const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    authUserService.currentUser.subscribe((x) => setUser(x));
+  }, []);
 
   const onDelete = async (e) => {
     e.preventDefault();
@@ -19,7 +25,8 @@ const LoanItem = (props) => {
         "¡Éxito!",
         "Se ha eliminado el contenido correctamente."
       );
-      props.history.push("/objects");
+      props.getData();
+      props.history.push("/loans");
     } catch (err) {
       setLoading(false);
       console.log("Error: " + err);
@@ -29,26 +36,49 @@ const LoanItem = (props) => {
   return loading ? (
     <Spinner />
   ) : (
-    <tr>
-      <td>{props.name}</td>
-      <td>{props.description}</td>
-      <td>{props.stock}</td>
-      <td>{props.price === 0 ? "Disponible" : "Prestado"}</td>
-      <td>
-        <a href={`/objects/edit/${props.id}`}>
-          <button onClick={(e) => onDelete(e)}>
-            <FontAwesomeIcon icon={faTrash} />
-          </button>
-        </a>
-      </td>
-      <td>
-        <a href={`/objects/edit/${props.id}`}>
-          <button>
-            <FontAwesomeIcon icon={faEdit} />
-          </button>
-        </a>
-      </td>
-    </tr>
+    <Fragment>
+      {user ? (
+        <tr>
+          <td>{props.name}</td>
+          <td>{props.description}</td>
+          <td>{props.stock}</td>
+          <td>
+            {props.picture !== "" ? (
+              <img src={props.picture} />
+            ) : (
+              <img src="https://www.pngkey.com/png/detail/287-2874452_pen-vector-graphics.png" />
+            )}
+          </td>
+          <td>
+            <a href={`/objects/edit/${props.id}`}>
+              <button onClick={(e) => onDelete(e)}>
+                <FontAwesomeIcon icon={faTrash} />
+              </button>
+            </a>
+          </td>
+          <td>
+            <a href={`/objects/edit/${props.id}`}>
+              <button>
+                <FontAwesomeIcon icon={faEdit} />
+              </button>
+            </a>
+          </td>
+        </tr>
+      ) : (
+        <tr>
+          <td>{props.name}</td>
+          <td>{props.description}</td>
+          <td>{props.stock}</td>
+          <td>
+            {props.picture !== "" ? (
+              <img src={props.picture} />
+            ) : (
+              <img src="https://www.pngkey.com/png/detail/287-2874452_pen-vector-graphics.png" />
+            )}
+          </td>
+        </tr>
+      )}
+    </Fragment>
   );
 };
 

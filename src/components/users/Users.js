@@ -44,7 +44,7 @@ const Users = ({ createNotification }) => {
     <Spinner />
   ) : (
     <Fragment>
-      <h1 className="large text-dark text-center">Usuarios</h1>
+      <h1 className="titles">Usuarios</h1>
       <br></br>
       <table>
         <thead>

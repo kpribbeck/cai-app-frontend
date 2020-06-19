@@ -2,11 +2,16 @@ h1 {
   text-align: center;
   font-family: sans-serif;
   font-size: 35px;
-  color: rgb(56, 56, 56);
   margin-bottom: 15px;
 }
 
+.titles {
+  color: whitesmoke;
+  font-size: 80px;
+}
+
 .item-container {
+  background-color: wheat;
   box-shadow: 5px 5px 16px 0px;
   display: block;
   max-width: 500px;
@@ -14,6 +19,9 @@ h1 {
   padding: 10px;
   margin: auto;
   margin-bottom: 20px;
+  border-radius: 30px;
+  min-height: 160px;
+  min-width: 50%;
 }
 
 .item-container a.title {
@@ -26,6 +34,19 @@ h1 {
   color: rgb(200, 170, 0);
 }
 
+#item-title {
+  text-align: center;
+  color: black;
+  text-decoration: none;
+  font-size: xx-large;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+#item-title:hover {
+  color: rgb(200, 170, 0);
+}
+
 .item-container a h3 {
   margin-top: 5px;
   margin-bottom: 10px;
@@ -33,12 +54,62 @@ h1 {
 
 .item-container p {
   text-align: justify;
+  font-size: large;
 }
 
 .item-container button {
   border: none;
   float: right;
   background-color: rgb(255, 255, 255);
+}
+
+.view-container {
+  background-color: wheat;
+  box-shadow: 5px 5px 16px 0px;
+  display: block;
+  max-width: 500px;
+  max-height: unset;
+  padding: 10px;
+  margin: auto;
+  margin-bottom: 20px;
+  border-radius: 30px;
+  min-height: 160px;
+  min-width: 50%;
+}
+
+.view-container a.title {
+  text-align: center;
+  color: black;
+  text-decoration: none;
+}
+
+.view-container a.title:hover {
+  color: rgb(200, 170, 0);
+}
+
+.view-container a h3 {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.view-container p {
+  text-align: justify;
+}
+
+.view-container button {
+  border: none;
+  float: right;
+  background-color: rgb(255, 255, 255);
+}
+
+.view-container button:hover {
+  cursor: pointer;
+  background-color: rgb(255, 246, 233);
+}
+
+.texto {
+  text-align: center;
+  color: whitesmoke;
 }
 
 .item-container button:hover {
@@ -91,7 +162,8 @@ label {
   display: inline-block;
 }
 
-input[type=text], textarea {
+input[type="text"],
+textarea {
   width: 100%;
   padding: 10px;
   border: 1px solid rgb(221, 201, 84);
@@ -99,11 +171,12 @@ input[type=text], textarea {
   resize: vertical;
 }
 
-input[type=text]:focus, textarea:focus {
+input[type="text"]:focus,
+textarea:focus {
   outline: rgb(223, 201, 78) solid 2px;
 }
 
-input[type=submit] {
+input[type="submit"] {
   width: 100px;
   margin-top: 10px;
   padding: 12px;
@@ -115,6 +188,32 @@ input[type=submit] {
   float: right;
 }
 
-input[type=submit]:hover {
+input[type="submit"]:hover {
   background-color: rgb(247, 233, 45);
+}
+
+.filter {
+  width: 250px;
+  float: right;
+  margin: 30px;
+  position: absolute;
+}
+
+table {
+  background-color: lightgray;
+}
+
+td img {
+  width: 100px;
+  height: 100px;
+}
+
+thead {
+  background-color: black;
+  color: white;
+  border: none;
+}
+
+#desc {
+  text-align: center;
 }

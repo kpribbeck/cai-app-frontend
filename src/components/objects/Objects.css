@@ -81,7 +81,7 @@ hr {
 }
 
 .row:after {
-  content: '';
+  content: "";
   display: table;
   clear: both;
 }
@@ -91,7 +91,7 @@ label {
   display: inline-block;
 }
 
-input[type='text'],
+input[type="text"],
 textarea {
   width: 100%;
   padding: 10px;
@@ -100,12 +100,12 @@ textarea {
   resize: vertical;
 }
 
-input[type='text']:focus,
+input[type="text"]:focus,
 textarea:focus {
   outline: rgb(223, 201, 78) solid 2px;
 }
 
-input[type='submit'] {
+input[type="submit"] {
   width: 100px;
   margin-top: 10px;
   padding: 12px;
@@ -117,7 +117,7 @@ input[type='submit'] {
   float: right;
 }
 
-input[type='submit']:hover {
+input[type="submit"]:hover {
   background-color: rgb(247, 233, 45);
 }
 
@@ -140,5 +140,5 @@ th {
 }
 
 tr:nth-child(even) {
-  background-color: #dddddd;
+  background-color: whitesmoke;
 }

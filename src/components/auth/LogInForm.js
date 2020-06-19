@@ -10,7 +10,7 @@ const LogInForm = ({ onSubmit, onChange, errors, formData }) => {
 
   return (
     <div>
-      <h1>Ingresar</h1>
+      <h1 className="titles">Ingresar</h1>
       <div className="form-container">
         <form onSubmit={(e) => onSubmit(e)}>
           <div className="row">

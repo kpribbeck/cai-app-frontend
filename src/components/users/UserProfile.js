@@ -32,6 +32,12 @@ const UserProfile = ({ user }) => {
   ) : (
     <Fragment>
       <div className="card">
+          {(user.picture !== "") && <img id="profile-picture" src={user.picture} />}
+          {/* {user.picture !== "" ? (
+            <img id="profile-picture" src={user.picture} />
+          ) : (
+            <img id="profile-picture" src="https://www.pngkey.com/png/detail/287-2874452_pen-vector-graphics.png" />
+          )} */}
         <h1>
           {user.name} {user.last_name}
         </h1>

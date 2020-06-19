@@ -1,26 +1,25 @@
-import React, { Fragment, useState, useEffect } from 'react';
-import Spinner from '../layout/Spinner';
-import { getUsersByState } from '../../requests/UserRequests';
+import React, { Fragment, useState, useEffect } from "react";
+import Spinner from "../layout/Spinner";
+import { getUsersByState } from "../../requests/UserRequests";
 import UserRequestItem from "./UserRequestItem";
-
 
 const UserRequests = ({ state, createNotification }) => {
   const testUsers = [
     {
       id: 0,
-      mail: 'first@mail.com',
-      name: 'Name1',
-      last_name: 'LastName1',
-      student_number: '12345678',
-      contact_number: '+5623456789',
+      mail: "first@mail.com",
+      name: "Name1",
+      last_name: "LastName1",
+      student_number: "12345678",
+      contact_number: "+5623456789",
     },
     {
       id: 1,
-      mail: 'second@mail.com',
-      name: 'Name2',
-      last_name: 'LastName2',
-      student_number: '12345678',
-      contact_number: '+5623456789',
+      mail: "second@mail.com",
+      name: "Name2",
+      last_name: "LastName2",
+      student_number: "12345678",
+      contact_number: "+5623456789",
     },
   ];
 
@@ -35,7 +34,7 @@ const UserRequests = ({ state, createNotification }) => {
       setUsers(res.data);
     } catch (err) {
       setLoading(false);
-      console.log('Error: ' + err);
+      console.log("Error: " + err);
     }
   };
 
@@ -76,7 +75,7 @@ const UserRequests = ({ state, createNotification }) => {
     <Spinner />
   ) : (
     <Fragment>
-      <h1 className='large text-dark text-center'>Solicitudes de Usuario</h1>
+      <h1 className="titles">Solicitudes de Usuario</h1>
       <br></br>
       <table>
         <thead>
@@ -89,12 +88,10 @@ const UserRequests = ({ state, createNotification }) => {
             <th>Acciones</th>
           </tr>
         </thead>
-        <tbody>
-          {displayUsers}
-        </tbody>
+        <tbody>{displayUsers}</tbody>
       </table>
     </Fragment>
   );
-}
+};
 
 export default UserRequests;

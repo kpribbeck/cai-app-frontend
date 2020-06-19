@@ -39,10 +39,12 @@ export const Navbar = ({ history }) => {
         </div>
       </li>
       <li style={{ float: "right" }}>
-        <a onClick={handleLogout}>Log out</a>
+        <a id="li-image" href="/profile">
+          {user && user.user.picture !== "" ? <img id="profile-pic" src={user.user.picture} /> : "Perfil"}
+        </a>
       </li>
       <li style={{ float: "right" }}>
-        <a href="/profile">Perfil</a>
+        <a onClick={handleLogout}>Log out</a>
       </li>
       <li style={{ float: "right" }}>
         <div className="dropdown">

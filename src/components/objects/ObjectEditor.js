@@ -6,18 +6,19 @@ import {
   putObject,
 } from "../../requests/ObjectRequests";
 import Spinner from "../layout/Spinner";
+import UploadButton from "../layout/UploadButton";
 
 const ObjectEditor = ({ createNotification, history }) => {
   const urlParams = useParams();
   const currentUrl = useLocation();
-
-  const [sell, setSell] = useState(true);
 
   const [loading, setLoading] = useState(false);
 
   const [errors, setErrors] = useState({});
 
   const [objectId, setObjectId] = useState(null);
+
+  const [uploadedfile, setFile] = useState(null);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -27,7 +28,13 @@ const ObjectEditor = ({ createNotification, history }) => {
     price: "",
   });
 
-  const { name, description, stock, picture, price } = formData;
+  const {
+    name,
+    description,
+    stock,
+    picture,
+    price
+  } = formData;
 
   // This executes when component is mounted
   // If we are not in /objects/new is because we must be editing a specific object,
@@ -52,11 +59,6 @@ const ObjectEditor = ({ createNotification, history }) => {
         picture: res.data.picture,
         price: res.data.price,
       });
-      if (price <= 0) {
-        setSell(false);
-      } else {
-        setSell(true);
-      }
     } catch (err) {
       setLoading(false);
       console.log("Error: " + err);
@@ -72,15 +74,57 @@ const ObjectEditor = ({ createNotification, history }) => {
     setFormData(newState);
   };
 
+  const onUpload = (e) => {
+    // hanlde image upload
+    const file = e.target.files[0];
+
+    console.log(file);
+
+    const types = ["image/png", "image/jpeg", "image/gif"];
+
+    if (types.every((type) => file.type !== type)) {
+      // error, unsupported type
+      setErrors({
+        upload: {
+          message: `El formato ${file.type} no está soportado por el sistema. Ingrese un archivo jpeg o png.`,
+        },
+      });
+      return;
+    }
+
+    if (file.size > 500000) {
+      // error, file too large
+      setErrors({
+        upload: {
+          message: `El tamaño de la imagen es demasiado grande.`,
+        },
+      });
+      return;
+    }
+
+    // update state
+    setFile(file);
+  };
+
   const onSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
 
     try {
+
+      // pass form data to a FormData html5 object, so that file gets sent correctly
+      const form = new FormData();
+      form.append("name", formData.name);
+      form.append("description", formData.description);
+      form.append("stock", formData.stock);
+      form.append("price", formData.price);
+      form.append("picture", formData.picture);
+      form.append("file", uploadedfile);
+
       if (currentUrl.pathname === "/objects/new") {
         // POST
         setLoading(true);
-        const res = await postObject(formData);
+        const res = await postObject(form);
         setLoading(false);
 
         createNotification(
@@ -95,10 +139,10 @@ const ObjectEditor = ({ createNotification, history }) => {
       } else {
         // PUT
         setLoading(true);
-        await putObject(objectId, formData);
+        await putObject(objectId, form);
         setLoading(false);
 
-        createNotification(
+        createNotification( 
           "¡Felicitaciones!",
           "Has modificado un objeto correctamente."
         );
@@ -129,7 +173,7 @@ const ObjectEditor = ({ createNotification, history }) => {
     <Spinner />
   ) : (
     <div>
-      <h1>Form para Objetos</h1>
+      <h1 className="titles">Form para Objetos</h1>
       <div className="form-container">
         <form onSubmit={(e) => onSubmit(e)}>
           <div className="row">
@@ -188,22 +232,16 @@ const ObjectEditor = ({ createNotification, history }) => {
           </div>
           <div className="row">
             <div className="col-20">
-              <label htmlFor="picture">URL imagen:</label>
+              <label htmlFor="picture">Adjuntar imagen:</label>
               <br />
             </div>
             <div className="col-80">
-              <input
-                type="text"
-                id="picture"
-                name="picture"
-                value={picture}
-                onChange={(e) => onChange(e)}
-                required
-              />
-              <br />
+              {formData.picture !== "" && (
+                <div>URL actual: {formData.picture}</div>
+              )}
+              <UploadButton onChange={onUpload} />
             </div>
           </div>
-          {sell ? (
             <div className="row">
               <div className="col-20">
                 <label htmlFor="price">Precio:</label>
@@ -221,27 +259,6 @@ const ObjectEditor = ({ createNotification, history }) => {
                 <br />
               </div>
             </div>
-          ) : (
-            <div className="row">
-              <div className="col-20">
-                <label htmlFor="price">Disponibilidad:</label>
-                <br />
-              </div>
-              <div className="col-80">
-                <select
-                  name="price"
-                  id="price"
-                  value={price}
-                  onChange={(e) => onChange(e)}
-                  required
-                >
-                  <option value="0">Disponible</option>
-                  <option value="-1">Prestado</option>
-                </select>
-                <br />
-              </div>
-            </div>
-          )}
           <div className="row">
             <input type="submit" value="Publicar" />
           </div>

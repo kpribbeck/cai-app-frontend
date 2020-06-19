@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { authUserService } from "../../requests/UserRequests";
-import { withRouter } from "react-router-dom";
+import { withRouter, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { deleteProyect } from "../../requests/ProyectRequests";
 import Spinner from "../layout/Spinner";
-import "./Proyects.css";
+import "../layout/main.css";
 
 const ProyectItem = (props) => {
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
+  const currentUrl = useLocation();
 
   useEffect(() => {
     authUserService.currentUser.subscribe((x) => setUser(x));
@@ -26,6 +27,7 @@ const ProyectItem = (props) => {
         "¡Éxito!",
         "Se ha eliminado el contenido correctamente."
       );
+      props.getData();
       props.history.push("/proyects");
     } catch (err) {
       setLoading(false);
@@ -37,9 +39,13 @@ const ProyectItem = (props) => {
     <Spinner />
   ) : (
     <div className="item-container">
-      <a href={`proyects/${props.id}`} className="title">
-        <h3>{props.name}</h3>
-      </a>
+      {currentUrl.pathname !== "/proyects" ? (
+        <h3 id="item-title">{props.title}</h3>
+      ) : (
+        <a href={`proyects/${props.id}`} className="title">
+          <h3>{props.title}</h3>
+        </a>
+      )}
       <hr />
       <p>{props.description}</p>
       <p>Contacto: {props.contact}</p>

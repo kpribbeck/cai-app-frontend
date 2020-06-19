@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useLocation, withRouter } from 'react-router-dom';
-import { getEvent, postEvent, putEvent } from '../../requests/EventRequests';
-import Spinner from '../layout/Spinner';
+import React, { useState, useEffect } from "react";
+import { useParams, useLocation, withRouter } from "react-router-dom";
+import { getEvent, postEvent, putEvent } from "../../requests/EventRequests";
+import Spinner from "../layout/Spinner";
 
 const EventEditor = ({ createNotification, history }) => {
   const urlParams = useParams();
@@ -14,11 +14,11 @@ const EventEditor = ({ createNotification, history }) => {
   const [eventId, setEventId] = useState(null);
 
   const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    organizer: '',
-    place: '',
-    category: '',
+    title: "",
+    description: "",
+    organizer: "",
+    place: "",
+    category: "",
   });
 
   const { title, description, organizer, place, category } = formData;
@@ -27,7 +27,7 @@ const EventEditor = ({ createNotification, history }) => {
   // If we are not in /events/new is because we must be editing a specific event,
   // then we need to get the current data of that event
   useEffect(() => {
-    if (currentUrl.pathname !== '/events/new') {
+    if (currentUrl.pathname !== "/events/new") {
       getData(urlParams.id);
     }
   }, [urlParams]);
@@ -48,7 +48,7 @@ const EventEditor = ({ createNotification, history }) => {
       });
     } catch (err) {
       setLoading(false);
-      console.log('Error: ' + err);
+      console.log("Error: " + err);
     }
   };
 
@@ -66,58 +66,67 @@ const EventEditor = ({ createNotification, history }) => {
     console.log(formData);
 
     try {
-      if (currentUrl.pathname === '/events/new') {
+      if (currentUrl.pathname === "/events/new") {
         // POST
         setLoading(true);
         const res = await postEvent(formData);
         setLoading(false);
-        
-        createNotification("¡Felicitaciones!", "Has creado un nuevo evento correctamente.");
-        history.push('/events');
+
+        createNotification(
+          "¡Felicitaciones!",
+          "Has creado un nuevo evento correctamente."
+        );
+        history.push("/events");
       } else {
         // PUT
         setLoading(true);
         console.log(formData);
         await putEvent(eventId, formData);
         setLoading(false);
-        
-        createNotification("¡Felicitaciones!", "Has modificado un evento correctamente.");
-        history.push('/events');
+
+        createNotification(
+          "¡Felicitaciones!",
+          "Has modificado un evento correctamente."
+        );
+        history.push("/events");
       }
     } catch (err) {
       setLoading(false);
       setErrors({
         request: {
-          message: "Error de servidor. Intente más tarde."
-        }
-      })
+          message: "Error de servidor. Intente más tarde.",
+        },
+      });
       console.error(err);
     }
   };
 
-  const displayErrors = Object.keys(errors)
-    .map(error => (<p className="error-message" key={error}>{errors[error].message}</p>))
+  const displayErrors = Object.keys(errors).map((error) => (
+    <p className="error-message" key={error}>
+      {errors[error].message}
+    </p>
+  ));
 
   return loading ? (
     <Spinner />
   ) : (
     <div>
-      <h1>Form para Eventos</h1>
-      <div className='form-container'>
+      <h1 className="titles">Form para Eventos</h1>
+      <div className="form-container">
         <form onSubmit={(e) => onSubmit(e)}>
           <div className="row">
             {Object.keys(errors).length > 0 && displayErrors}
           </div>
-          <div className='row'>
-            <div className='col-20'>
-              <label htmlFor='title'>Título:</label>
+          <div className="row">
+            <div className="col-20">
+              <label htmlFor="title">Título:</label>
               <br />
             </div>
-            <div className='col-80'>
+            <div className="col-80">
               <input
-                type='text'
-                id='title'
-                name='title'
+                type="text"
+                id="title"
+                name="title"
                 value={title}
                 onChange={(e) => onChange(e)}
                 required
@@ -125,16 +134,16 @@ const EventEditor = ({ createNotification, history }) => {
               <br />
             </div>
           </div>
-          <div className='row'>
-            <div className='col-20'>
-              <label htmlFor='description'>Descripción:</label>
+          <div className="row">
+            <div className="col-20">
+              <label htmlFor="description">Descripción:</label>
               <br />
             </div>
-            <div className='col-80'>
+            <div className="col-80">
               <textarea
-                style={{ height: '200px' }}
-                id='description'
-                name='description'
+                style={{ height: "200px" }}
+                id="description"
+                name="description"
                 value={description}
                 onChange={(e) => onChange(e)}
                 required
@@ -142,16 +151,16 @@ const EventEditor = ({ createNotification, history }) => {
               <br />
             </div>
           </div>
-          <div className='row'>
-            <div className='col-20'>
-              <label htmlFor='organizer'>Organizador:</label>
+          <div className="row">
+            <div className="col-20">
+              <label htmlFor="organizer">Organizador:</label>
               <br />
             </div>
-            <div className='col-80'>
+            <div className="col-80">
               <input
-                type='text'
-                id='organizer'
-                name='organizer'
+                type="text"
+                id="organizer"
+                name="organizer"
                 value={organizer}
                 onChange={(e) => onChange(e)}
                 required
@@ -159,16 +168,16 @@ const EventEditor = ({ createNotification, history }) => {
               <br />
             </div>
           </div>
-          <div className='row'>
-            <div className='col-20'>
-              <label htmlFor='place'>Lugar:</label>
+          <div className="row">
+            <div className="col-20">
+              <label htmlFor="place">Lugar:</label>
               <br />
             </div>
-            <div className='col-80'>
+            <div className="col-80">
               <input
-                type='text'
-                id='place'
-                name='place'
+                type="text"
+                id="place"
+                name="place"
                 value={place}
                 onChange={(e) => onChange(e)}
                 required
@@ -176,16 +185,16 @@ const EventEditor = ({ createNotification, history }) => {
               <br />
             </div>
           </div>
-          <div className='row'>
-            <div className='col-20'>
-              <label htmlFor='category'>Categoría:</label>
+          <div className="row">
+            <div className="col-20">
+              <label htmlFor="category">Fecha:</label>
               <br />
             </div>
-            <div className='col-80'>
+            <div className="col-80">
               <input
-                type='text'
-                id='category'
-                name='category'
+                type="text"
+                id="category"
+                name="category"
                 value={category}
                 onChange={(e) => onChange(e)}
                 required
@@ -193,8 +202,8 @@ const EventEditor = ({ createNotification, history }) => {
               <br />
             </div>
           </div>
-          <div className='row'>
-            <input type='submit' value='Publicar' />
+          <div className="row">
+            <input type="submit" value="Publicar" />
           </div>
         </form>
       </div>

@@ -6,7 +6,8 @@ import {
   putLostFound,
 } from "../../requests/LostFoundRequests";
 import Spinner from "../layout/Spinner";
-import UploadButton from "./UploadButton";
+import UploadButton from "./../layout/UploadButton";
+import { faCommentsDollar } from "@fortawesome/free-solid-svg-icons";
 
 const LostFoundEditor = ({ createNotification, history }) => {
   const urlParams = useParams();
@@ -72,16 +73,13 @@ const LostFoundEditor = ({ createNotification, history }) => {
   };
 
   const onChange = (e) => {
-    let newState = {}; 
-    if (e.target.name !== "pickedUp")
-    {
+    let newState = {};
+    if (e.target.name !== "pickedUp") {
       newState = {
         ...formData,
         [e.target.name]: e.target.value,
       };
-    }
-    else
-    {
+    } else {
       let checked = 0;
       if (e.target.checked) checked = 1;
       newState = {
@@ -98,11 +96,10 @@ const LostFoundEditor = ({ createNotification, history }) => {
     const file = e.target.files[0];
 
     console.log(file);
-  
-    const types = ['image/png', 'image/jpeg', 'image/gif'];
 
-    if (types.every(type => file.type !== type))
-    {
+    const types = ["image/png", "image/jpeg", "image/gif"];
+
+    if (types.every((type) => file.type !== type)) {
       // error, unsupported type
       setErrors({
         upload: {
@@ -112,8 +109,7 @@ const LostFoundEditor = ({ createNotification, history }) => {
       return;
     }
 
-    if (file.size > 500000)
-    {
+    if (file.size > 500000) {
       // error, file too large
       setErrors({
         upload: {
@@ -125,8 +121,7 @@ const LostFoundEditor = ({ createNotification, history }) => {
 
     // update state
     setFile(file);
-
-  }
+  };
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -134,9 +129,7 @@ const LostFoundEditor = ({ createNotification, history }) => {
     console.log(formData);
 
     try {
-
-      if (uploadedfile == null)
-      {
+      if (uploadedfile == null && !formData.picture) {
         setErrors({
           upload: {
             message: `Debe adjuntar una imagen.`,
@@ -154,8 +147,6 @@ const LostFoundEditor = ({ createNotification, history }) => {
       form.append("pickedBy_mail", formData.pickedBy_mail);
       form.append("pickedBy_phone", formData.pickedBy_phone);
       form.append("file", uploadedfile);
-      console.log(uploadedfile);
-
 
       if (currentUrl.pathname === "/lost-founds/new") {
         // POST
@@ -171,7 +162,6 @@ const LostFoundEditor = ({ createNotification, history }) => {
       } else {
         // PUT
         setLoading(true);
-        console.log(formData);
         await putLostFound(lostFoundId, form);
         setLoading(false);
 
@@ -202,7 +192,7 @@ const LostFoundEditor = ({ createNotification, history }) => {
     <Spinner />
   ) : (
     <div>
-      <h1>Form para Cosas Perdidas</h1>
+      <h1 className="titles">Form para Cosas Perdidas</h1>
       <div className="form-container">
         <form onSubmit={(e) => onSubmit(e)}>
           <div className="row">
@@ -248,8 +238,10 @@ const LostFoundEditor = ({ createNotification, history }) => {
               <br />
             </div>
             <div className="col-80">
-              {formData.picture !== "" && <div>URL actual: {formData.picture}</div>}
-              <UploadButton  onChange={onUpload}/>
+              {formData.picture !== "" && (
+                <div>URL actual: {formData.picture}</div>
+              )}
+              <UploadButton onChange={onUpload} />
             </div>
           </div>
           <div className="row">
@@ -265,7 +257,7 @@ const LostFoundEditor = ({ createNotification, history }) => {
                 value={pickedUp}
                 onChange={(e) => onChange(e)}
               />
-            <br />
+              <br />
             </div>
           </div>
           <div className="row">

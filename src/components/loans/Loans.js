@@ -2,10 +2,18 @@ import React, { Fragment, useState, useEffect } from "react";
 import Spinner from "../layout/Spinner";
 import { getObjects } from "../../requests/ObjectRequests";
 import LoanItem from "./LoanItem";
+import FilterBox from "../layout/FilterBox";
+import { authUserService } from "../../requests/UserRequests";
 
 const Loans = ({ createNotification }) => {
   const [objects, setObjects] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState("");
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    authUserService.currentUser.subscribe((x) => setUser(x));
+  }, []);
 
   const getData = async () => {
     try {
@@ -25,34 +33,51 @@ const Loans = ({ createNotification }) => {
     getData();
   }, []);
 
-  const displayObjects = objects.map((object) => (
-    <LoanItem
-      key={object.id}
-      id={object.id}
-      name={object.name}
-      description={object.description}
-      stock={object.stock}
-      price={object.price}
-      createNotification={createNotification}
-    />
-  ));
+  const displayObjects = objects.map(
+    (object) =>
+      (object.name.toLowerCase().includes(filter.toLowerCase()) ||
+        object.description.toLowerCase().includes(filter.toLowerCase())) && (
+        <LoanItem
+          key={object.id}
+          id={object.id}
+          name={object.name}
+          description={object.description}
+          stock={object.stock}
+          price={object.price}
+          picture={object.picture}
+          createNotification={createNotification}
+          getData={getData}
+        />
+      )
+  );
 
   return loading ? (
     <Spinner />
   ) : (
     <Fragment>
-      <h1 className="large text-dark text-center">Préstamos</h1>
-      <br></br>
+      <FilterBox value={filter} onChange={setFilter} />
+      <h1 className="titles">Préstamos</h1>
       <table>
-        <tr>
-          <th>Nombre</th>
-          <th>Descripción</th>
-          <th>Stock</th>
-          <th>Disponibilidad</th>
-          <th>Borrar</th>
-          <th>Editar</th>
-        </tr>
-        {displayObjects}
+        <thead>
+          {user ? (
+            <tr>
+              <th>Nombre</th>
+              <th>Descripción</th>
+              <th>Stock</th>
+              <th>Imagen</th>
+              <th>Borrar</th>
+              <th>Editar</th>
+            </tr>
+          ) : (
+            <tr>
+              <th>Nombre</th>
+              <th>Descripción</th>
+              <th>Stock</th>
+              <th>Imagen</th>
+            </tr>
+          )}
+        </thead>
+        <tbody>{displayObjects}</tbody>
       </table>
     </Fragment>
   );
