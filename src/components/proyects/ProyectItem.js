@@ -40,10 +40,10 @@ const ProyectItem = (props) => {
   ) : (
     <div className="item-container">
       {currentUrl.pathname !== "/proyects" ? (
-        <h3 id="item-title">{props.title}</h3>
+        <h3 id="item-title">{props.name}</h3>
       ) : (
         <a href={`proyects/${props.id}`} className="title">
-          <h3>{props.title}</h3>
+          <h3>{props.name}</h3>
         </a>
       )}
       <hr />
