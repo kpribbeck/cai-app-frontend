@@ -33,6 +33,7 @@ const Proyects = ({ createNotification }) => {
         <ProyectItem
           key={proyect.id}
           id={proyect.id}
+          userId={proyect.userId}
           name={proyect.name}
           description={proyect.description}
           contact={proyect.contact}
