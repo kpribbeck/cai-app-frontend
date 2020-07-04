@@ -187,6 +187,13 @@ const Routes = () => {
             <UserRequests state={"0"} createNotification={createNotification} />
           )}
         />
+        <Route
+          exact
+          path="/google"
+          render={() => (
+            <SignUpPage createNotification={createNotification} google={true} />
+          )}
+        />
       </Switch>
       {authUserService.currentUser.source.value && <Footer />}
     </section>

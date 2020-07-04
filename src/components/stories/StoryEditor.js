@@ -57,7 +57,6 @@ const StoryEditor = ({ createNotification, history }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
 
     try {
       if (currentUrl.pathname === "/stories/new") {
@@ -74,7 +73,6 @@ const StoryEditor = ({ createNotification, history }) => {
       } else {
         // PUT
         setLoading(true);
-        console.log(formData);
         await putStory(storyId, formData);
         setLoading(false);
 
@@ -114,7 +112,6 @@ const StoryEditor = ({ createNotification, history }) => {
           <div className="row">
             <div className="col-20">
               <label htmlFor="title">Título:</label>
-              <br />
             </div>
             <div className="col-80">
               <input
@@ -125,24 +122,21 @@ const StoryEditor = ({ createNotification, history }) => {
                 onChange={(e) => onChange(e)}
                 required
               />
-              <br />
             </div>
           </div>
           <div className="row">
             <div className="col-20">
               <label htmlFor="body">Cuerpo:</label>
-              <br />
             </div>
             <div className="col-80">
               <textarea
-                style={{ height: "200px" }}
+                className="textarea-form"
                 id="body"
                 name="body"
                 value={body}
                 onChange={(e) => onChange(e)}
                 required
               />
-              <br />
             </div>
           </div>
           <div className="row">

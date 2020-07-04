@@ -31,7 +31,7 @@ const Object = () => {
     <Spinner />
   ) : (
     <Fragment>
-      <div className="mt-3">
+      <div className="item-box">
         <ObjectItem {...object} />
       </div>
     </Fragment>

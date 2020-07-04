@@ -65,7 +65,6 @@ const ProyectEditor = ({ createNotification, history }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
 
     try {
       if (currentUrl.pathname === "/proyects/new") {
@@ -82,7 +81,6 @@ const ProyectEditor = ({ createNotification, history }) => {
       } else {
         // PUT
         setLoading(true);
-        console.log(formData);
         await putProyect(proyectId, formData);
         setLoading(false);
 
@@ -122,7 +120,6 @@ const ProyectEditor = ({ createNotification, history }) => {
           <div className="row">
             <div className="col-20">
               <label htmlFor="name">Nombre:</label>
-              <br />
             </div>
             <div className="col-80">
               <input
@@ -133,13 +130,11 @@ const ProyectEditor = ({ createNotification, history }) => {
                 onChange={(e) => onChange(e)}
                 required
               />
-              <br />
             </div>
           </div>
           <div className="row">
             <div className="col-20">
               <label htmlFor="description">Descripción:</label>
-              <br />
             </div>
             <div className="col-80">
               <textarea
@@ -150,13 +145,11 @@ const ProyectEditor = ({ createNotification, history }) => {
                 onChange={(e) => onChange(e)}
                 required
               />
-              <br />
             </div>
           </div>
           <div className="row">
             <div className="col-20">
               <label htmlFor="contact">Contacto:</label>
-              <br />
             </div>
             <div className="col-80">
               <input
@@ -167,13 +160,11 @@ const ProyectEditor = ({ createNotification, history }) => {
                 onChange={(e) => onChange(e)}
                 required
               />
-              <br />
             </div>
           </div>
           <div className="row">
             <div className="col-20">
               <label htmlFor="picture">URL imagen:</label>
-              <br />
             </div>
             <div className="col-80">
               <input
@@ -184,7 +175,6 @@ const ProyectEditor = ({ createNotification, history }) => {
                 onChange={(e) => onChange(e)}
                 required
               />
-              <br />
             </div>
           </div>
           <div className="row">

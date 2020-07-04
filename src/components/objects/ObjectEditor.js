@@ -28,13 +28,7 @@ const ObjectEditor = ({ createNotification, history }) => {
     price: "",
   });
 
-  const {
-    name,
-    description,
-    stock,
-    picture,
-    price
-  } = formData;
+  const { name, description, stock, picture, price } = formData;
 
   // This executes when component is mounted
   // If we are not in /objects/new is because we must be editing a specific object,
@@ -78,8 +72,6 @@ const ObjectEditor = ({ createNotification, history }) => {
     // hanlde image upload
     const file = e.target.files[0];
 
-    console.log(file);
-
     const types = ["image/png", "image/jpeg", "image/gif"];
 
     if (types.every((type) => file.type !== type)) {
@@ -108,10 +100,8 @@ const ObjectEditor = ({ createNotification, history }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
 
     try {
-
       // pass form data to a FormData html5 object, so that file gets sent correctly
       const form = new FormData();
       form.append("name", formData.name);
@@ -142,7 +132,7 @@ const ObjectEditor = ({ createNotification, history }) => {
         await putObject(objectId, form);
         setLoading(false);
 
-        createNotification( 
+        createNotification(
           "¡Felicitaciones!",
           "Has modificado un objeto correctamente."
         );
@@ -182,7 +172,6 @@ const ObjectEditor = ({ createNotification, history }) => {
           <div className="row">
             <div className="col-20">
               <label htmlFor="name">Nombre:</label>
-              <br />
             </div>
             <div className="col-80">
               <input
@@ -193,47 +182,42 @@ const ObjectEditor = ({ createNotification, history }) => {
                 onChange={(e) => onChange(e)}
                 required
               />
-              <br />
             </div>
           </div>
           <div className="row">
             <div className="col-20">
               <label htmlFor="description">Descripción:</label>
-              <br />
             </div>
             <div className="col-80">
               <textarea
-                style={{ height: "200px" }}
+                className="textarea-form"
                 id="description"
                 name="description"
                 value={description}
                 onChange={(e) => onChange(e)}
                 required
               />
-              <br />
             </div>
           </div>
           <div className="row">
             <div className="col-20">
               <label htmlFor="stock">Stock:</label>
-              <br />
             </div>
             <div className="col-80">
               <input
                 type="number"
+                min="0"
                 id="stock"
                 name="stock"
                 value={stock}
                 onChange={(e) => onChange(e)}
                 required
               />
-              <br />
             </div>
           </div>
           <div className="row">
             <div className="col-20">
               <label htmlFor="picture">Adjuntar imagen:</label>
-              <br />
             </div>
             <div className="col-80">
               {formData.picture !== "" && (
@@ -242,23 +226,22 @@ const ObjectEditor = ({ createNotification, history }) => {
               <UploadButton onChange={onUpload} />
             </div>
           </div>
-            <div className="row">
-              <div className="col-20">
-                <label htmlFor="price">Precio:</label>
-                <br />
-              </div>
-              <div className="col-80">
-                <input
-                  type="number"
-                  id="price"
-                  name="price"
-                  value={price}
-                  onChange={(e) => onChange(e)}
-                  required
-                />
-                <br />
-              </div>
+          <div className="row">
+            <div className="col-20">
+              <label htmlFor="price">Precio:</label>
             </div>
+            <div className="col-80">
+              <input
+                type="number"
+                min="0"
+                id="price"
+                name="price"
+                value={price}
+                onChange={(e) => onChange(e)}
+                required
+              />
+            </div>
+          </div>
           <div className="row">
             <input type="submit" value="Publicar" />
           </div>

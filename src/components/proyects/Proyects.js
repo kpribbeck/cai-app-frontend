@@ -39,6 +39,7 @@ const Proyects = ({ createNotification }) => {
           contact={proyect.contact}
           createNotification={createNotification}
           getData={getData}
+          userId={proyect.userId}
         />
       )
   );

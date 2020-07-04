@@ -1,8 +1,18 @@
 import React, { useState } from "react";
 import "./Auth.css";
 import UploadButton from "../layout/UploadButton";
+import GoogleLogin from "react-google-login";
 
-const SignUpForm = ({ onSubmit, onChange, onUpload, errors, formData, edit }) => {
+const SignUpForm = ({
+  onSubmit,
+  onChange,
+  onUpload,
+  errors,
+  formData,
+  edit,
+  google,
+  onGoogleSubmit,
+}) => {
   const [showpass, setShowpass] = useState(edit ? false : true);
   const displayErrors = Object.keys(errors).map((error) => (
     <p className="error-message" key={error}>
@@ -10,9 +20,20 @@ const SignUpForm = ({ onSubmit, onChange, onUpload, errors, formData, edit }) =>
     </p>
   ));
 
+  const responseGoogle = (response) => {
+    const out = {
+      mail: response.profileObj.email,
+      name: response.profileObj.givenName,
+      last_name: response.profileObj.familyName,
+    };
+    onGoogleSubmit(out);
+  };
+
   return (
     <div>
-      <h1 className="titles">{edit ? "Editar" : "Crear"} Cuenta</h1>
+      <h1 className="titles">
+        {edit ? "Editar" : "Crear"} Cuenta {google && "con Google"}
+      </h1>
       <div className="form-container">
         <form onSubmit={(e) => onSubmit(e)}>
           <div className="row">
@@ -21,7 +42,6 @@ const SignUpForm = ({ onSubmit, onChange, onUpload, errors, formData, edit }) =>
           <div className="row">
             <div className="col-25">
               <label htmlFor="mail">Mail*:</label>
-              <br />
             </div>
             <div className="col-75">
               <input
@@ -32,15 +52,14 @@ const SignUpForm = ({ onSubmit, onChange, onUpload, errors, formData, edit }) =>
                 onChange={(e) => onChange(e)}
                 required
               />
-              <br />
             </div>
           </div>
-          {showpass && (
+
+          {showpass && !google && (
             <div>
               <div className="row">
                 <div className="col-25">
                   <label htmlFor="password">Contraseña*:</label>
-                  <br />
                 </div>
                 <div className="col-75">
                   <input
@@ -52,13 +71,11 @@ const SignUpForm = ({ onSubmit, onChange, onUpload, errors, formData, edit }) =>
                     onChange={(e) => onChange(e)}
                     required
                   />
-                  <br />
                 </div>
               </div>
               <div className="row">
                 <div className="col-25">
                   <label htmlFor="verifyPassword">Verifique Contraseña*:</label>
-                  <br />
                 </div>
                 <div className="col-75">
                   <input
@@ -70,16 +87,13 @@ const SignUpForm = ({ onSubmit, onChange, onUpload, errors, formData, edit }) =>
                     onChange={(e) => onChange(e)}
                     required
                   />
-                  <br />
                 </div>
               </div>
             </div>
           )}
-
           <div className="row">
             <div className="col-25">
               <label htmlFor="name">Nombre*:</label>
-              <br />
             </div>
             <div className="col-75">
               <input
@@ -90,13 +104,12 @@ const SignUpForm = ({ onSubmit, onChange, onUpload, errors, formData, edit }) =>
                 onChange={(e) => onChange(e)}
                 required
               />
-              <br />
             </div>
           </div>
+
           <div className="row">
             <div className="col-25">
               <label htmlFor="last_name">Apellidos*:</label>
-              <br />
             </div>
             <div className="col-75">
               <input
@@ -107,13 +120,11 @@ const SignUpForm = ({ onSubmit, onChange, onUpload, errors, formData, edit }) =>
                 onChange={(e) => onChange(e)}
                 required
               />
-              <br />
             </div>
           </div>
           <div className="row">
             <div className="col-25">
               <label htmlFor="picture">Foto de perfil:</label>
-              <br />
             </div>
             <div className="col-75">
               {formData.picture !== "" && (
@@ -125,7 +136,6 @@ const SignUpForm = ({ onSubmit, onChange, onUpload, errors, formData, edit }) =>
           <div className="row">
             <div className="col-25">
               <label htmlFor="student_number">Número de Alumno*:</label>
-              <br />
             </div>
             <div className="col-75">
               <input
@@ -138,13 +148,11 @@ const SignUpForm = ({ onSubmit, onChange, onUpload, errors, formData, edit }) =>
                 onChange={(e) => onChange(e)}
                 required
               />
-              <br />
             </div>
           </div>
           <div className="row">
             <div className="col-25">
               <label htmlFor="contact_number">Número de Contacto*:</label>
-              <br />
             </div>
             <div className="col-75">
               <input
@@ -154,13 +162,11 @@ const SignUpForm = ({ onSubmit, onChange, onUpload, errors, formData, edit }) =>
                 value={formData.contact_number}
                 onChange={(e) => onChange(e)}
               />
-              <br />
             </div>
           </div>
           <div className="row">
             <div className="col-25">
               <label htmlFor="job">Cargo:</label>
-              <br />
             </div>
             <div className="col-75">
               <input
@@ -170,7 +176,6 @@ const SignUpForm = ({ onSubmit, onChange, onUpload, errors, formData, edit }) =>
                 value={formData.job}
                 onChange={(e) => onChange(e)}
               />
-              <br />
             </div>
           </div>
           <div className="row">
@@ -179,6 +184,14 @@ const SignUpForm = ({ onSubmit, onChange, onUpload, errors, formData, edit }) =>
               type="submit"
               value={edit ? "Guardar" : "Enviar Solicitud"}
             />
+            <div className="google">
+              <GoogleLogin
+                clientId="858028191486-hq1albfmdj563rvhnifk5mh71ej818p9.apps.googleusercontent.com"
+                onSuccess={responseGoogle}
+                cookiePolicy={"single_host_origin"}
+                buttonText="Iniciar Sesión"
+              />
+            </div>
             {edit && (
               <button
                 className="changepass"

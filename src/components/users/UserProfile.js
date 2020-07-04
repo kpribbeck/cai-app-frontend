@@ -32,8 +32,8 @@ const UserProfile = ({ user }) => {
   ) : (
     <Fragment>
       <div className="card">
-          {(user.picture !== "") && <img id="profile-picture" src={user.picture} />}
-          {/* {user.picture !== "" ? (
+        {user.picture !== "" && <img id="profile-picture" src={user.picture} />}
+        {/* {user.picture !== "" ? (
             <img id="profile-picture" src={user.picture} />
           ) : (
             <img id="profile-picture" src="https://www.pngkey.com/png/detail/287-2874452_pen-vector-graphics.png" />
@@ -49,11 +49,10 @@ const UserProfile = ({ user }) => {
         <p>{user.student_number}</p>
         <p className="title">Contacto</p>
         <p>{user.contact_number}</p>
-        <br />
+
         <a href={`/users/edit/${user.id}`}>
           <button className="changepass">Editar Perfil</button>
         </a>
-        <br />
       </div>
     </Fragment>
   );

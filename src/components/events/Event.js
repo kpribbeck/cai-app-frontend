@@ -19,7 +19,7 @@ const Event = () => {
       setEvent(res.data);
     } catch (err) {
       setLoading(false);
-      console.log('Error: ' + err);
+      console.log("Error: " + err);
     }
   };
 
@@ -31,9 +31,8 @@ const Event = () => {
     <Spinner />
   ) : (
     <Fragment>
-      <br/>
-      <div className='mt-3'>
-        <EventItem {...event} />
+      <div className="item-box">
+        <EventItem id="map" map={true} {...event} />
       </div>
     </Fragment>
   );

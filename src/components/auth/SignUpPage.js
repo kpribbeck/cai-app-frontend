@@ -9,10 +9,10 @@ const SignUpPage = ({ createNotification, history }) => {
   const currentUrl = useLocation();
 
   const [loading, setLoading] = useState(false);
-
+  const [google, setGoogle] = useState(false);
   const [errors, setErrors] = useState({});
   const [userId, setUserId] = useState();
-  const [uploadedfile, setFile] = useState(null)
+  const [uploadedfile, setFile] = useState(null);
   const [edit, setEdit] = useState(false);
   const [formData, setFormData] = useState({
     mail: "",
@@ -60,7 +60,7 @@ const SignUpPage = ({ createNotification, history }) => {
   };
 
   const checkPasswordError = (pwd1, pwd2) => {
-    if (pwd1 !== pwd2) {
+    if (pwd1 !== pwd2 && !google) {
       const newState = {
         ...formData,
         ["password"]: "",
@@ -91,11 +91,21 @@ const SignUpPage = ({ createNotification, history }) => {
     setFormData(newState);
   };
 
+  const onGoogleSubmit = (response) => {
+    setGoogle(true);
+    const newState = {
+      ...formData,
+      mail: response.mail,
+      name: response.name,
+      last_name: response.last_name,
+    };
+
+    setFormData(newState);
+  };
+
   const onUpload = (e) => {
     // hanlde image upload
     const file = e.target.files[0];
-
-    console.log(file);
 
     const types = ["image/png", "image/jpeg", "image/gif"];
 
@@ -125,7 +135,6 @@ const SignUpPage = ({ createNotification, history }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
 
     let pwdError = checkPasswordError(
       formData.password,
@@ -140,8 +149,14 @@ const SignUpPage = ({ createNotification, history }) => {
     // pass form data to a FormData html5 object, so that file gets sent correctly
     const form = new FormData();
     form.append("mail", formData.mail);
-    form.append("password", formData.password);
-    form.append("verifyPassword", formData.verifyPassword);
+    if (google) {
+      form.append("password", "123456789");
+      form.append("verifyPassword", "123456789");
+      form.append("google", true);
+    } else {
+      form.append("password", formData.password);
+      form.append("verifyPassword", formData.verifyPassword);
+    }
     form.append("name", formData.name);
     form.append("last_name", formData.last_name);
     form.append("student_number", formData.student_number);
@@ -177,7 +192,7 @@ const SignUpPage = ({ createNotification, history }) => {
         setLoading(true);
         const res = await putUser(userId, form);
         setLoading(false);
-        
+
         if (res.status != "201") {
           // invalid form
           setErrors({
@@ -216,6 +231,8 @@ const SignUpPage = ({ createNotification, history }) => {
       errors={errors}
       formData={formData}
       edit={edit}
+      google={google}
+      onGoogleSubmit={onGoogleSubmit}
     />
   );
 };

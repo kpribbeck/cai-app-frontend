@@ -20,6 +20,7 @@ const UserItem = (props) => {
         "¡Éxito!",
         "Se ha eliminado el contenido correctamente."
       );
+      props.getData();
       props.history.push("/users");
     } catch (err) {
       setLoading(false);

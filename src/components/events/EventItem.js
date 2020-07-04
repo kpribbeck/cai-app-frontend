@@ -6,6 +6,7 @@ import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { deleteEvent } from "../../requests/EventRequests";
 import Spinner from "../layout/Spinner";
 import "../layout/main.css";
+import GoogleMap from "../layout/GoogleMap";
 
 const EventItem = (props) => {
   const [loading, setLoading] = useState(false);
@@ -55,6 +56,7 @@ const EventItem = (props) => {
       <p id="desc">{props.description}</p>
       <p>Te esperamos en {props.place}</p>
       <p>El día {props.category}</p>
+      {props.map && props.place && <GoogleMap id="google-map" address={props.place} />}
       {user && (user.user.id == props.userId || user.user.is_admin == 1) && (
         <div id="button-bar">
           <a href={`/events/edit/${props.id}`}>

@@ -31,6 +31,7 @@ const Events = ({ createNotification }) => {
       (event.title.toLowerCase().includes(filter.toLowerCase()) ||
         event.description.toLowerCase().includes(filter.toLowerCase())) && (
         <EventItem
+          map={false}
           key={event.id}
           id={event.id}
           title={event.title}

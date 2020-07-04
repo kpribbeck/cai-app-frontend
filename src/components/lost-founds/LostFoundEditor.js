@@ -95,8 +95,6 @@ const LostFoundEditor = ({ createNotification, history }) => {
     // hanlde image upload
     const file = e.target.files[0];
 
-    console.log(file);
-
     const types = ["image/png", "image/jpeg", "image/gif"];
 
     if (types.every((type) => file.type !== type)) {
@@ -125,8 +123,6 @@ const LostFoundEditor = ({ createNotification, history }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-
-    console.log(formData);
 
     try {
       if (uploadedfile == null && !formData.picture) {
@@ -201,7 +197,6 @@ const LostFoundEditor = ({ createNotification, history }) => {
           <div className="row">
             <div className="col-20">
               <label htmlFor="name">Nombre:</label>
-              <br />
             </div>
             <div className="col-80">
               <input
@@ -212,30 +207,26 @@ const LostFoundEditor = ({ createNotification, history }) => {
                 onChange={(e) => onChange(e)}
                 required
               />
-              <br />
             </div>
           </div>
           <div className="row">
             <div className="col-20">
               <label htmlFor="description">Descripción:</label>
-              <br />
             </div>
             <div className="col-80">
               <textarea
-                style={{ height: "200px" }}
+                className="textarea-form"
                 id="description"
                 name="description"
                 value={description}
                 onChange={(e) => onChange(e)}
                 required
               />
-              <br />
             </div>
           </div>
           <div className="row">
             <div className="col-20">
               <label htmlFor="picture">Adjuntar imagen:</label>
-              <br />
             </div>
             <div className="col-80">
               {formData.picture !== "" && (
@@ -247,7 +238,6 @@ const LostFoundEditor = ({ createNotification, history }) => {
           <div className="row">
             <div className="col-20">
               <label htmlFor="pickedBy_name">¿Ha sido entregado?:</label>
-              <br />
             </div>
             <div className="col-80">
               <input
@@ -257,13 +247,11 @@ const LostFoundEditor = ({ createNotification, history }) => {
                 value={pickedUp}
                 onChange={(e) => onChange(e)}
               />
-              <br />
             </div>
           </div>
           <div className="row">
             <div className="col-20">
               <label htmlFor="pickedBy_name">Nombre del dueño:</label>
-              <br />
             </div>
             <div className="col-80">
               <input
@@ -273,13 +261,11 @@ const LostFoundEditor = ({ createNotification, history }) => {
                 value={pickedBy_name}
                 onChange={(e) => onChange(e)}
               />
-              <br />
             </div>
           </div>
           <div className="row">
             <div className="col-20">
               <label htmlFor="pickedBy_mail">Mail del dueño:</label>
-              <br />
             </div>
             <div className="col-80">
               <input
@@ -289,13 +275,11 @@ const LostFoundEditor = ({ createNotification, history }) => {
                 value={pickedBy_mail}
                 onChange={(e) => onChange(e)}
               />
-              <br />
             </div>
           </div>
           <div className="row">
             <div className="col-20">
               <label htmlFor="pickedBy_phone">Teléfono del dueño:</label>
-              <br />
             </div>
             <div className="col-80">
               <input
@@ -305,7 +289,6 @@ const LostFoundEditor = ({ createNotification, history }) => {
                 value={pickedBy_phone}
                 onChange={(e) => onChange(e)}
               />
-              <br />
             </div>
           </div>
           <div className="row">

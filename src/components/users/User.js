@@ -1,8 +1,8 @@
-import React, { useState, useEffect, Fragment } from 'react';
-import { getUser, getUsers } from '../../requests/UserRequests';
-import { useParams } from 'react-router-dom';
-import UserItem from './UserItem';
-import Spinner from '../layout/Spinner';
+import React, { useState, useEffect, Fragment } from "react";
+import { getUser, getUsers } from "../../requests/UserRequests";
+import { useParams } from "react-router-dom";
+import UserItem from "./UserItem";
+import Spinner from "../layout/Spinner";
 
 const User = () => {
   const urlParams = useParams();
@@ -19,7 +19,7 @@ const User = () => {
       setUser(res.data);
     } catch (err) {
       setLoading(false);
-      console.log('Error: ' + err);
+      console.log("Error: " + err);
     }
   };
 
@@ -31,7 +31,7 @@ const User = () => {
     <Spinner />
   ) : (
     <Fragment>
-      <div className='mt-3'>
+      <div className="item-box">
         <UserItem {...user} />
       </div>
     </Fragment>

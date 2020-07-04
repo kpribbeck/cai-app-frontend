@@ -38,15 +38,19 @@ export const Navbar = ({ history }) => {
           </div>
         </div>
       </li>
-      <li style={{ float: "right" }}>
+      <li className="float-right">
         <a id="li-image" href="/profile">
-          {user && user.user.picture !== "" ? <img id="profile-pic" src={user.user.picture} /> : "Perfil"}
+          {user && user.user.picture !== "" ? (
+            <img id="profile-pic" src={user.user.picture} />
+          ) : (
+            "Perfil"
+          )}
         </a>
       </li>
-      <li style={{ float: "right" }}>
+      <li className="float-right">
         <a onClick={handleLogout}>Log out</a>
       </li>
-      <li style={{ float: "right" }}>
+      <li className="float-right">
         <div className="dropdown">
           <div className="dropbtn">Nuevo</div>
           <div className="dropdown-content">
@@ -59,7 +63,7 @@ export const Navbar = ({ history }) => {
         </div>
       </li>
       {user && user.user.is_admin === 1 && (
-        <li style={{ float: "right" }}>
+        <li className="float-right">
           <div className="dropdown">
             <div className="dropbtn">Solicitudes</div>
             <div className="dropdown-content">
@@ -70,7 +74,7 @@ export const Navbar = ({ history }) => {
         </li>
       )}
       {user && user.user.is_admin === 1 && (
-        <li style={{ float: "right" }}>
+        <li className="float-right">
           <a href="/users">Usuarios</a>
         </li>
       )}
@@ -98,10 +102,10 @@ export const Navbar = ({ history }) => {
           </div>
         </div>
       </li>
-      <li style={{ float: "right" }}>
+      <li className="float-right">
         <a href="/sign-up">Registrarse</a>
       </li>
-      <li style={{ float: "right" }}>
+      <li className="float-right">
         <a href="/log-in">Ingresar</a>
       </li>
     </div>

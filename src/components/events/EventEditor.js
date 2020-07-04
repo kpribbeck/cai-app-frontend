@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useLocation, withRouter } from "react-router-dom";
 import { getEvent, postEvent, putEvent } from "../../requests/EventRequests";
+import GoogleMap from "../layout/GoogleMap";
+import SearchLocationInput from "../layout/SearchLocationInput";
 import Spinner from "../layout/Spinner";
 
 const EventEditor = ({ createNotification, history }) => {
@@ -12,6 +14,8 @@ const EventEditor = ({ createNotification, history }) => {
   const [errors, setErrors] = useState({});
 
   const [eventId, setEventId] = useState(null);
+
+  const [address, setAddress] = useState("");
 
   const [formData, setFormData] = useState({
     title: "",
@@ -46,11 +50,27 @@ const EventEditor = ({ createNotification, history }) => {
         place: res.data.place,
         category: res.data.category,
       });
+      setAddress(res.data.place);
     } catch (err) {
       setLoading(false);
       console.log("Error: " + err);
     }
   };
+
+  const handleChangeLocation = (newLocation) => {
+    console.log("old: " + JSON.stringify(formData));
+    console.log("newLocation: " + String(newLocation));
+    // const newState = {
+    //   ...formData,
+    //   ["place"]: newLocation,
+    // };
+
+    // console.log(newState);
+    // setAddress(newLocation);
+    // console.log(address);
+
+    // setFormData(newState)
+  }
 
   const onChange = (e) => {
     const newState = {
@@ -64,12 +84,17 @@ const EventEditor = ({ createNotification, history }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
+    console.log(address);
+    const newState = {
+      ...formData,
+      'place': address,
+    }
 
     try {
       if (currentUrl.pathname === "/events/new") {
         // POST
         setLoading(true);
-        const res = await postEvent(formData);
+        const res = await postEvent(newState);
         setLoading(false);
 
         createNotification(
@@ -81,7 +106,7 @@ const EventEditor = ({ createNotification, history }) => {
         // PUT
         setLoading(true);
         console.log(formData);
-        await putEvent(eventId, formData);
+        await putEvent(eventId, newState);
         setLoading(false);
 
         createNotification(
@@ -120,7 +145,6 @@ const EventEditor = ({ createNotification, history }) => {
           <div className="row">
             <div className="col-20">
               <label htmlFor="title">Título:</label>
-              <br />
             </div>
             <div className="col-80">
               <input
@@ -131,30 +155,26 @@ const EventEditor = ({ createNotification, history }) => {
                 onChange={(e) => onChange(e)}
                 required
               />
-              <br />
             </div>
           </div>
           <div className="row">
             <div className="col-20">
               <label htmlFor="description">Descripción:</label>
-              <br />
             </div>
             <div className="col-80">
               <textarea
-                style={{ height: "200px" }}
+                className="textarea-form"
                 id="description"
                 name="description"
                 value={description}
                 onChange={(e) => onChange(e)}
                 required
               />
-              <br />
             </div>
           </div>
           <div className="row">
             <div className="col-20">
               <label htmlFor="organizer">Organizador:</label>
-              <br />
             </div>
             <div className="col-80">
               <input
@@ -165,41 +185,39 @@ const EventEditor = ({ createNotification, history }) => {
                 onChange={(e) => onChange(e)}
                 required
               />
-              <br />
             </div>
           </div>
           <div className="row">
             <div className="col-20">
               <label htmlFor="place">Lugar:</label>
-              <br />
             </div>
             <div className="col-80">
-              <input
+              {/* <input
                 type="text"
                 id="place"
                 name="place"
                 value={place}
                 onChange={(e) => onChange(e)}
                 required
-              />
+              /> */}
+              <SearchLocationInput location={address} updateLocation={setAddress} />
+              {/* <GoogleMap /> */}
               <br />
             </div>
           </div>
           <div className="row">
             <div className="col-20">
               <label htmlFor="category">Fecha:</label>
-              <br />
             </div>
             <div className="col-80">
               <input
-                type="text"
+                type="date"
                 id="category"
                 name="category"
                 value={category}
                 onChange={(e) => onChange(e)}
                 required
               />
-              <br />
             </div>
           </div>
           <div className="row">

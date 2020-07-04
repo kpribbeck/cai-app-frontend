@@ -36,6 +36,7 @@ const Users = ({ createNotification }) => {
           student_number={user.student_number}
           contact_number={user.contact_number}
           createNotification={createNotification}
+          getData={getData}
         />
       )
   );
