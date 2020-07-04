@@ -184,14 +184,16 @@ const SignUpForm = ({
               type="submit"
               value={edit ? "Guardar" : "Enviar Solicitud"}
             />
-            <div className="google">
-              <GoogleLogin
-                clientId="858028191486-hq1albfmdj563rvhnifk5mh71ej818p9.apps.googleusercontent.com"
-                onSuccess={responseGoogle}
-                cookiePolicy={"single_host_origin"}
-                buttonText="Iniciar Sesión"
-              />
-            </div>
+            {!edit && (
+              <div className="google">
+                <GoogleLogin
+                  clientId="858028191486-hq1albfmdj563rvhnifk5mh71ej818p9.apps.googleusercontent.com"
+                  onSuccess={responseGoogle}
+                  cookiePolicy={"single_host_origin"}
+                  buttonText="Iniciar Sesión"
+                />
+              </div>
+            )}
             {edit && (
               <button
                 className="changepass"
